@@ -1,21 +1,69 @@
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import companyLogo from '../assets/company-logo.png'
+import { useState } from 'react'
+import { BellIcon } from '@heroicons/react/24/outline'
+
+const navigation = [
+	{ name: 'ติดตามความคืบหน้า', link: '/', isSelected: false },
+	{ name: 'รายการงานย้อนหลัง', link: '/about', isSelected: false },
+	{ name: 'กำหนดสิทธิการเข้าถึง', link: '/', isSelected: false },
+]
+
+function classNames(...classes) {
+	return classes.filter(Boolean).join(' ')
+}
+
+const handleClick = (item) => {}
 
 export default function Header() {
+	const [isSelected, setIsSelected] = useState(false)
 	const { currentUser } = useSelector((state) => state.user)
 	return (
-		<div className="bg-slate-200">
+		<div className="bg-blue-600">
 			<div className="flex justify-between items-center max-w-6xl mx-auto p-3">
-				<Link to="/">
-					<h1 className="font-bold">Auth App</h1>
-				</Link>
-				<ul className="flex gap-4">
+				<div className="flex items-center">
 					<Link to="/">
-						<li>Home</li>
+						<img className="h-8 w-auto" src={companyLogo} alt="companyLogo" />
 					</Link>
-					<Link to="/about">
-						<li>About</li>
-					</Link>
+					<div className="hidden sm:ml-6 sm:block">
+						<div className="flex space-x-4">
+							{navigation.map((item) => (
+								<Link
+									key={item.name}
+									to={item.link}
+									onClick={handleClick(item.isSelected)}
+									className={classNames(
+										item.isSelected
+											? 'bg-gray-900 text-white'
+											: 'text-gray-300 hover:bg-gray-700 hover:text-white',
+										'rounded-md px-3 py-2 text-sm font-medium'
+									)}
+									aria-current={item.current ? 'page' : undefined}
+								>
+									{item.name}
+								</Link>
+							))}
+						</div>
+					</div>
+					{/* <ul className="flex gap-4 ml-4">
+						<Link to="/">
+							<li>Home</li>
+						</Link>
+						<Link to="/about">
+							<li>About</li>
+						</Link>
+					</ul> */}
+				</div>
+				<ul className="flex gap-4">
+					<button
+						type="button"
+						className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
+					>
+						<span className="absolute -inset-1.5" />
+						<span className="sr-only">View notifications</span>
+						<BellIcon className="h-6 w-6" aria-hidden="true" />
+					</button>
 					<Link to="/profile">
 						{currentUser ? (
 							<img
