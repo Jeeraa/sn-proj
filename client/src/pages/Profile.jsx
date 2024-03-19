@@ -31,6 +31,7 @@ export default function Profile() {
 				const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
 				setImagePercent(Math.round(progress))
 			},
+			// eslint-disable-next-line no-unused-vars
 			(error) => {
 				setImageError(true)
 			},
@@ -53,7 +54,7 @@ export default function Profile() {
 					onChange={(e) => setImage(e.target.files[0])}
 				/>
 				<img
-					src={currentUser.profilePicture}
+					src={formData.profilePicture || currentUser.profilePicture}
 					alt="profile"
 					className="h-24 w-24 self-center cursor-pointer rounded-full object-cover mt-2"
 					onClick={() => fileRef.current.click()}
