@@ -2,7 +2,6 @@ import {
 	ArrowPathIcon,
 	CheckCircleIcon,
 	ClockIcon,
-	CurrencyDollarIcon,
 } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 
@@ -10,11 +9,10 @@ export default function Modal({ isOpen, onClose, onUpdateStatus }) {
 	const [selectedStatus, setSelectedStatus] = useState('')
 
 	const handleUpdateStatus = () => {
-		// Call the onUpdateStatus function with the selected status
 		onUpdateStatus(selectedStatus)
-		// Close the modal
 		onClose()
 	}
+
 	return (
 		<div
 			className={`fixed inset-0 flex justify-center items-center ${
@@ -28,9 +26,9 @@ export default function Modal({ isOpen, onClose, onUpdateStatus }) {
 					<button
 						type="button"
 						className={`max-w-lg mx-auto flex flex-col items-center rounded-full bg-sky-400 px-3 py-7 text-sm text-white hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700 ${
-							selectedStatus === 'Waiting' ? 'selected' : ''
+							selectedStatus === 'รอดำเนินการ' ? 'selected' : ''
 						}`}
-						onClick={() => setSelectedStatus('Waiting')}
+						onClick={() => setSelectedStatus('รอดำเนินการ')}
 					>
 						<ClockIcon className="h-8 w-8" aria-hidden="true" />
 
@@ -39,9 +37,9 @@ export default function Modal({ isOpen, onClose, onUpdateStatus }) {
 					<button
 						type="button"
 						className={`max-w-lg mx-auto flex flex-col items-center mb-1 rounded-full bg-sky-400 px-3 py-7 text-sm text-white hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700 ${
-							selectedStatus === 'In Progress' ? 'selected' : ''
+							selectedStatus === 'กำลังดำเนินการ' ? 'selected' : ''
 						}`}
-						onClick={() => setSelectedStatus('In Progress')}
+						onClick={() => setSelectedStatus('กำลังดำเนินการ')}
 					>
 						<ArrowPathIcon className="h-8 w-8" aria-hidden="true" />
 
@@ -50,9 +48,9 @@ export default function Modal({ isOpen, onClose, onUpdateStatus }) {
 					<button
 						type="button"
 						className={`max-w-lg mx-auto flex flex-col items-center mb-1 rounded-full bg-sky-400 px-3 py-7 text-sm text-white hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-700 ${
-							selectedStatus === 'Complete' ? 'selected' : ''
+							selectedStatus === 'เสร็จสิ้น' ? 'selected' : ''
 						}`}
-						onClick={() => setSelectedStatus('Complete')}
+						onClick={() => setSelectedStatus('เสร็จสิ้น')}
 					>
 						<CheckCircleIcon className="h-8 w-8" aria-hidden="true" />
 
@@ -67,7 +65,7 @@ export default function Modal({ isOpen, onClose, onUpdateStatus }) {
 						ยกเลิก
 					</button>
 					<button
-						className="bg-blue-500 text-white px-4 py-2 rounded"
+						className="bg-emerald-500 text-white px-4 py-2 rounded"
 						onClick={handleUpdateStatus}
 					>
 						ยืนยัน

@@ -5,12 +5,37 @@ import {
 	ShoppingCartIcon,
 	TruckIcon,
 } from '@heroicons/react/24/outline'
+import Modal from '../components/Modal'
+import { useState } from 'react'
 
 export default function TaskCard() {
-	const handleEdit = () => {
-		// Add your edit functionality here
-		console.log('Edit button clicked')
+	// const handleEdit = () => {
+	// 	console.log('Edit button clicked')
+	// }
+
+	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [selectedStatus1, setSelectedStatus1] = useState('')
+	const [selectedStatus2, setSelectedStatus2] = useState('')
+	const [selectedStatus3, setSelectedStatus3] = useState('')
+	const [selectedStatus4, setSelectedStatus4] = useState('')
+	const [selectedStatus5, setSelectedStatus5] = useState('')
+
+	const handleUpdateStatus1 = (status) => {
+		setSelectedStatus1(status)
 	}
+	// const handleUpdateStatus2 = (status) => {
+	// 	setSelectedStatus2(status)
+	// }
+	// const handleUpdateStatus3 = (status) => {
+	// 	setSelectedStatus3(status)
+	// }
+	// const handleUpdateStatus4 = (status) => {
+	// 	setSelectedStatus4(status)
+	// }
+	// const handleUpdateStatus5 = (status) => {
+	// 	setSelectedStatus5(status)
+	// }
+
 	return (
 		<div className="">
 			<div className="bg-sky-200 shadow-md rounded-lg p-3 flex justify-between items-center">
@@ -29,11 +54,12 @@ export default function TaskCard() {
 					<button
 						type="button"
 						className="max-w-lg mx-auto flex flex-col items-center mb-1 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+						onClick={() => setIsModalOpen(true)}
 					>
 						<p className="font-semibold mb-3">การประมูล</p>
 						<DocumentArrowDownIcon className="h-8 w-8" aria-hidden="true" />
 						<div className="w-28 text-sm rounded-full bg-sky-500 text-white mt-3 px-2 py-1 truncate">
-							กำลังดำเนินการ
+							{selectedStatus1}
 						</div>
 					</button>
 
@@ -41,12 +67,13 @@ export default function TaskCard() {
 					<button
 						type="button"
 						className="max-w-lg mx-auto flex flex-col items-center mb-1 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+						onClick={() => setIsModalOpen(true)}
 					>
 						<p className="font-semibold mb-3">การเซ็นสัญญา</p>
 
 						<DocumentCheckIcon className="h-8 w-8" aria-hidden="true" />
 						<div className="w-28 text-sm rounded-full bg-sky-500 text-white mt-3 px-2 py-1 truncate">
-							รอดำเนินการ
+							{selectedStatus2}
 						</div>
 					</button>
 
@@ -54,11 +81,12 @@ export default function TaskCard() {
 					<button
 						type="button"
 						className="max-w-lg mx-auto flex flex-col items-center mb-1 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+						onClick={() => setIsModalOpen(true)}
 					>
 						<p className="font-semibold mb-3">การสั่งซื้อ</p>
 						<ShoppingCartIcon className="h-8 w-8" aria-hidden="true" />
 						<div className="w-28 text-sm rounded-full bg-sky-500 text-white mt-3 px-2 py-1 truncate">
-							เสร็จสิ้น
+							{selectedStatus3}
 						</div>
 					</button>
 
@@ -66,11 +94,12 @@ export default function TaskCard() {
 					<button
 						type="button"
 						className="max-w-lg mx-auto flex flex-col items-center mb-1 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+						onClick={() => setIsModalOpen(true)}
 					>
 						<p className="font-semibold mb-3">การส่งมอบ</p>
 						<TruckIcon className="h-8 w-8" aria-hidden="true" />
 						<div className="w-28 text-sm rounded-full bg-sky-500 text-white mt-3 px-2 py-1 truncate">
-							เสร็จสิ้น
+							{selectedStatus4}
 						</div>
 					</button>
 
@@ -78,11 +107,12 @@ export default function TaskCard() {
 					<button
 						type="button"
 						className="max-w-lg mx-auto flex flex-col items-center mb-1 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+						onClick={() => setIsModalOpen(true)}
 					>
 						<p className="font-semibold mb-3">การชำระเงิน</p>
 						<CurrencyDollarIcon className="h-8 w-8" aria-hidden="true" />
 						<div className="w-28 text-sm rounded-full bg-sky-500 text-white mt-3 px-2 py-1 truncate">
-							เสร็จสิ้น
+							{selectedStatus5}
 						</div>
 					</button>
 				</div>
@@ -98,6 +128,13 @@ export default function TaskCard() {
 					เสร็จสิ้น
 				</div>
 			</button> */}
+
+			{/* Render the Modal component */}
+			<Modal
+				isOpen={isModalOpen}
+				onClose={() => setIsModalOpen(false)}
+				onUpdateStatus={handleUpdateStatus1}
+			/>
 		</div>
 	)
 }
