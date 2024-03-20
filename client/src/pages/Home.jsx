@@ -6,7 +6,7 @@ export default function Home() {
 		<div className="px-4 py-12 max-w-6xl mx-auto">
 			<div className="m-5 lg:ml-4 lg:mt-0 text-end">
 				<span className="sm:ml-3">
-					<a href="/addnewwork">
+					<a href="/addnewtask">
 						<button
 							type="button"
 							className="inline-flex items-center rounded-md bg-red-400 px-3 py-2 text-sm text-white shadow-sm hover:bg-red-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
