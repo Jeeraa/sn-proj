@@ -7,7 +7,6 @@ import { BellIcon } from '@heroicons/react/24/outline'
 const navigation = [
 	{ name: 'ติดตามความคืบหน้า', link: '/', isSelected: false },
 	{ name: 'รายการงานย้อนหลัง', link: '/about', isSelected: false },
-	{ name: 'กำหนดสิทธิการเข้าถึง', link: '/sign-up', isSelected: false },
 ]
 
 function classNames(...classes) {
@@ -19,6 +18,19 @@ const handleClick = (item) => {}
 export default function Header() {
 	const [isSelected, setIsSelected] = useState(false)
 	const { currentUser } = useSelector((state) => state.user)
+
+	// Check if the current user has the "admin" role
+	const isAdmin = currentUser?.role === 'แอดมิน'
+
+	// Add the "กำหนดสิทธิการเข้าถึง" link to the navigation array if the user is an admin
+	if (isAdmin) {
+		navigation.push({
+			name: 'กำหนดสิทธิการเข้าถึง',
+			link: '/sign-up',
+			isSelected: false,
+		})
+	}
+
 	return (
 		<div className="bg-sky-500">
 			<div className="flex justify-between items-center max-w-6xl mx-auto p-3">

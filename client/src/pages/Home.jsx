@@ -1,5 +1,5 @@
 import { DocumentPlusIcon } from '@heroicons/react/24/outline'
-import TaskCard from '../components/TaskCard'
+import TaskCard from '../components/UserCard'
 
 export default function Home() {
 	return (

@@ -1,4 +1,4 @@
-import TaskCard from '../components/TaskCard'
+import TaskCard from '../components/UserCard'
 
 export default function About() {
 	return (

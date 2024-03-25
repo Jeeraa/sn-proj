@@ -136,12 +136,12 @@ export default function TaskCard() {
 						</div>
 					</button>
 				</div>
-				<div className="flex items-center space-x-4">
+				<div className="flex items-center space-x-4 ml-4">
 					<PencilSquareIcon
 						className="h-6 w-6 text-sky-500 cursor-pointer"
 						onClick={() => setIsShowCardDetailModalOpen(true)}
 					/>
-					<TrashIcon className="h-6 w-6 text-sky-500 cursor-pointer" />
+					<TrashIcon className="h-6 w-6 text-red-500 cursor-pointer" />
 				</div>
 			</div>
 
