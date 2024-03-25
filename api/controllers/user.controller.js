@@ -20,8 +20,11 @@ export const updateUser = async (req, res, next) => {
 			req.params.id,
 			{
 				$set: {
-					username: req.body.username,
+					name: req.body.name,
+					lastname: req.body.lastname,
 					email: req.body.email,
+					role: req.body.role,
+					username: req.body.username,
 					password: req.body.password,
 					profilePicture: req.body.profilePicture,
 				},

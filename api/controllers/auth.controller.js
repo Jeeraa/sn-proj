@@ -4,9 +4,16 @@ import { errorHandler } from '../utils/error.js'
 import jwt from 'jsonwebtoken'
 
 export const signup = async (req, res, next) => {
-	const { username, email, password } = req.body
+	const { name, lastname, email, role, username, password } = req.body
 	const hashedPassword = bcryptjs.hashSync(password, 10)
-	const newUser = new User({ username, email, password: hashedPassword })
+	const newUser = new User({
+		name,
+		lastname,
+		email,
+		role,
+		username,
+		password: hashedPassword,
+	})
 	try {
 		await newUser.save()
 		res.status(201).json({ message: 'User created successfully' })
@@ -16,9 +23,9 @@ export const signup = async (req, res, next) => {
 }
 
 export const signin = async (req, res, next) => {
-	const { email, password } = req.body
+	const { username, password } = req.body
 	try {
-		const validUser = await User.findOne({ email })
+		const validUser = await User.findOne({ username })
 		if (!validUser) return next(errorHandler(404, 'User not found'))
 		const validPassword = bcryptjs.compareSync(password, validUser.password)
 		if (!validPassword) return next(errorHandler(401, 'Wrong credentials'))

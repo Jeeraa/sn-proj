@@ -7,7 +7,7 @@ import { BellIcon } from '@heroicons/react/24/outline'
 const navigation = [
 	{ name: 'ติดตามความคืบหน้า', link: '/', isSelected: false },
 	{ name: 'รายการงานย้อนหลัง', link: '/about', isSelected: false },
-	{ name: 'กำหนดสิทธิการเข้าถึง', link: '/', isSelected: false },
+	{ name: 'กำหนดสิทธิการเข้าถึง', link: '/sign-up', isSelected: false },
 ]
 
 function classNames(...classes) {

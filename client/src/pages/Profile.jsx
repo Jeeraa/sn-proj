@@ -138,10 +138,18 @@ export default function Profile() {
 					)}
 				</p>
 				<input
-					defaultValue={currentUser.username}
+					defaultValue={currentUser.name}
 					type="text"
-					id="username"
-					placeholder="Username"
+					id="name"
+					placeholder="ชื่อ"
+					className="bg-slate-100 rounded-lg p-3"
+					onChange={handleChange}
+				/>
+				<input
+					defaultValue={currentUser.lastname}
+					type="text"
+					id="lastname"
+					placeholder="นามสกุล"
 					className="bg-slate-100 rounded-lg p-3"
 					onChange={handleChange}
 				/>
@@ -153,6 +161,15 @@ export default function Profile() {
 					className="bg-slate-100 rounded-lg p-3"
 					onChange={handleChange}
 				/>
+				<input
+					defaultValue={currentUser.username}
+					type="text"
+					id="username"
+					placeholder="Username"
+					className="bg-slate-100 rounded-lg p-3"
+					onChange={handleChange}
+				/>
+
 				<input
 					type="password"
 					id="password"

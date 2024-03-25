@@ -1,15 +1,17 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import OAuth from '../components/OAuth'
+// import OAuth from '../components/OAuth'
 
 export default function SignUp() {
 	const [formData, setFormData] = useState({})
 	const [error, setError] = useState(false)
 	const [loading, setLoading] = useState(false)
 	const navigate = useNavigate()
+
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.id]: e.target.value })
 	}
+
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		try {
@@ -36,19 +38,46 @@ export default function SignUp() {
 	}
 	return (
 		<div className="p-3 max-w-lg mx-auto">
-			<h1 className="text-3xl text-center font-semibold my-7">Sign Up</h1>
+			<h1 className="text-3xl text-center font-semibold my-7">
+				ลงทะเบียนผู้ใช้งาน
+			</h1>
 			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
 				<input
 					type="text"
-					placeholder="Username"
-					id="username"
+					placeholder="ชื่อ"
+					id="name"
 					className="bg-slate-100 p-3 rounded-lg"
 					onChange={handleChange}
 				/>
 				<input
+					type="text"
+					placeholder="นามสกุล"
+					id="lastname"
+					className="bg-slate-100 p-3 rounded-lg"
+					onChange={handleChange}
+				/>
+
+				<input
 					type="email"
-					placeholder="Email"
+					placeholder="E-mail"
 					id="email"
+					className="bg-slate-100 p-3 rounded-lg"
+					onChange={handleChange}
+				/>
+				<select
+					id="role"
+					className="bg-slate-100 p-3 rounded-lg"
+					onChange={handleChange}
+				>
+					<option value="">เลือกบทบาท</option>
+					<option value="ผู้บริหาร">ผู้บริหาร</option>
+					<option value="ฝ่ายขาย">ฝ่ายขาย</option>
+					<option value="แอดมิน">แอดมิน</option>
+				</select>
+				<input
+					type="text"
+					placeholder="Username"
+					id="username"
 					className="bg-slate-100 p-3 rounded-lg"
 					onChange={handleChange}
 				/>
@@ -65,14 +94,14 @@ export default function SignUp() {
 				>
 					{loading ? 'Loading...' : 'Sign Up'}
 				</button>
-				<OAuth />
+				{/* <OAuth /> */}
 			</form>
-			<div className="flex gap-2 mt-5">
+			{/* <div className="flex gap-2 mt-5">
 				<p>Have an account?</p>
 				<Link to="/sign-in">
 					<span className="text-blue-500">Sign In</span>
 				</Link>
-			</div>
+			</div> */}
 			<p className="text-red-700 mt-5">{error && 'Something wrong!'}</p>
 		</div>
 	)

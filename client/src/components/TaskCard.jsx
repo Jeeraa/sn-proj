@@ -4,16 +4,16 @@ import {
 	DocumentCheckIcon,
 	ShoppingCartIcon,
 	TruckIcon,
+	PencilSquareIcon,
+	TrashIcon,
 } from '@heroicons/react/24/outline'
 import Modal from '../components/Modal'
 import { useState } from 'react'
 
 export default function TaskCard() {
-	// const handleEdit = () => {
-	// 	console.log('Edit button clicked')
-	// }
-
 	const [isModalOpen, setIsModalOpen] = useState(false)
+	const [isShowCardDetailModalOpen, setIsShowCardDetailModalOpen] =
+		useState(false)
 	const [selectedStatus1, setSelectedStatus1] = useState('')
 	const [selectedStatus2, setSelectedStatus2] = useState('')
 	const [selectedStatus3, setSelectedStatus3] = useState('')
@@ -23,18 +23,38 @@ export default function TaskCard() {
 	const handleUpdateStatus1 = (status) => {
 		setSelectedStatus1(status)
 	}
-	// const handleUpdateStatus2 = (status) => {
-	// 	setSelectedStatus2(status)
-	// }
-	// const handleUpdateStatus3 = (status) => {
-	// 	setSelectedStatus3(status)
-	// }
-	// const handleUpdateStatus4 = (status) => {
-	// 	setSelectedStatus4(status)
-	// }
-	// const handleUpdateStatus5 = (status) => {
-	// 	setSelectedStatus5(status)
-	// }
+
+	const handleUpdateStatus2 = (status) => {
+		if (selectedStatus1 !== 'เสร็จสิ้น') {
+			setSelectedStatus2(status)
+		} else {
+			alert('Please complete the previous process first.')
+		}
+	}
+
+	const handleUpdateStatus3 = (status) => {
+		if (selectedStatus2 !== 'เสร็จสิ้น') {
+			setSelectedStatus3(status)
+		} else {
+			alert('Please complete the previous process first.')
+		}
+	}
+
+	const handleUpdateStatus4 = (status) => {
+		if (selectedStatus3 !== '') {
+			setSelectedStatus4(status)
+		} else {
+			alert('Please complete the previous process first.')
+		}
+	}
+
+	const handleUpdateStatus5 = (status) => {
+		if (selectedStatus4 !== '') {
+			setSelectedStatus5(status)
+		} else {
+			alert('Please complete the previous process first.')
+		}
+	}
 
 	return (
 		<div className="">
@@ -116,7 +136,15 @@ export default function TaskCard() {
 						</div>
 					</button>
 				</div>
+				<div className="flex items-center space-x-4">
+					<PencilSquareIcon
+						className="h-6 w-6 text-sky-500 cursor-pointer"
+						onClick={() => setIsShowCardDetailModalOpen(true)}
+					/>
+					<TrashIcon className="h-6 w-6 text-sky-500 cursor-pointer" />
+				</div>
 			</div>
+
 			{/* Edit Button */}
 			{/* <button
 				type="button"
@@ -133,7 +161,11 @@ export default function TaskCard() {
 			<Modal
 				isOpen={isModalOpen}
 				onClose={() => setIsModalOpen(false)}
-				onUpdateStatus={handleUpdateStatus1}
+				onUpdateStatus1={handleUpdateStatus1}
+				onUpdateStatus2={handleUpdateStatus2}
+				onUpdateStatus3={handleUpdateStatus3}
+				onUpdateStatus4={handleUpdateStatus4}
+				onUpdateStatus5={handleUpdateStatus5}
 			/>
 		</div>
 	)
