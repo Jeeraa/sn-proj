@@ -26,7 +26,7 @@ export default function Header() {
 	if (isAdmin) {
 		navigation.push({
 			name: 'กำหนดสิทธิการเข้าถึง',
-			link: '/sign-up',
+			link: '/user-reg',
 			isSelected: false,
 		})
 	}

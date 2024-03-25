@@ -8,6 +8,7 @@ import Header from './components/Header'
 import SignIn from './pages/Signin'
 import PrivateRoute from './components/PrivateRoute'
 import AddNewTask from './pages/AddNewTask'
+import UserReg from './pages/UserReg'
 
 export default function App() {
 	return (
@@ -18,6 +19,7 @@ export default function App() {
 				<Route element={<PrivateRoute />}>
 					<Route path="/about" element={<About />}></Route>
 					<Route path="/" element={<Home />}></Route>
+					<Route path="/user-reg" element={<UserReg />}></Route>
 					<Route path="/sign-up" element={<SignUp />}></Route>
 					<Route path="/profile" element={<Profile />}></Route>
 					<Route path="/addnewtask" element={<AddNewTask />}></Route>

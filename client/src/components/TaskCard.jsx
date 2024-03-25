@@ -7,7 +7,7 @@ import {
 	PencilSquareIcon,
 	TrashIcon,
 } from '@heroicons/react/24/outline'
-import Modal from '../components/Modal'
+import Modal from './Modal'
 import { useState } from 'react'
 
 export default function TaskCard() {
