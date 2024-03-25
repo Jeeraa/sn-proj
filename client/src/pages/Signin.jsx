@@ -6,7 +6,7 @@ import {
 	signInFailure,
 } from '../redux/user/userSlice'
 import { useDispatch, useSelector } from 'react-redux'
-import OAuth from '../components/OAuth'
+// import OAuth from '../components/OAuth'
 
 export default function SignIn() {
 	const [formData, setFormData] = useState({})
@@ -40,7 +40,7 @@ export default function SignIn() {
 	}
 	return (
 		<div className="p-3 max-w-lg mx-auto">
-			<h1 className="text-3xl text-center font-semibold my-7">Sign In</h1>
+			<h1 className="text-3xl text-center font-semibold my-7">เข้าสู่ระบบ</h1>
 			<form onSubmit={handleSubmit} className="flex flex-col gap-4">
 				<input
 					type="text"
@@ -62,14 +62,14 @@ export default function SignIn() {
 				>
 					{loading ? 'Loading...' : 'Sign In'}
 				</button>
-				<OAuth />
+				{/* <OAuth /> */}
 			</form>
-			<div className="flex gap-2 mt-5">
+			{/* <div className="flex gap-2 mt-5">
 				<p>Do not have an account?</p>
 				<Link to="/sign-up">
 					<span className="text-blue-500">Sign Up</span>
 				</Link>
-			</div>
+			</div> */}
 			<p className="text-red-700 mt-5">
 				{error ? error.message || 'Something wrong!' : ''}
 			</p>
