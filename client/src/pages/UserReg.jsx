@@ -3,7 +3,7 @@ import UserCard from '../components/UserCard'
 
 export default function UserReg() {
 	return (
-		<div className="px-4 py-12 max-w-2xl mx-auto">
+		<div className="px-4 py-12 max-w-6xl mx-auto">
 			<div className="m-5 lg:ml-4 lg:mt-0 text-end">
 				<span className="sm:ml-3">
 					<a href="/sign-up">
