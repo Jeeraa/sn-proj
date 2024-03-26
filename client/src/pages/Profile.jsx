@@ -177,18 +177,19 @@ export default function Profile() {
 					className="bg-slate-100 rounded-lg p-3"
 					onChange={handleChange}
 				/>
-				<button className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-					{loading ? 'Loading...' : 'Update'}
+				<button
+					type="submit"
+					className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+				>
+					อัปเดตข้อมูล
+				</button>
+				<button
+					onClick={handleSignout}
+					className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+				>
+					ออกจากระบบ
 				</button>
 			</form>
-			<div className="flex justify-between mt-5">
-				<span onClick={handleDeleteAccount} className="text-red-700 cursor-pointer">
-					Delete Account
-				</span>
-				<span onClick={handleSignout} className="text-red-700 cursor-pointer">
-					Sign Out
-				</span>
-			</div>
 			<p className="text-red-700 mt-5 ">{error && 'Something Wrong!'}</p>
 			<p className="text-green-700 mt-5 ">
 				{updateSuccess && 'User is updated successfully'}

@@ -72,6 +72,7 @@ export default function SignUp() {
 					<option value="">เลือกบทบาท</option>
 					<option value="ผู้บริหาร">ผู้บริหาร</option>
 					<option value="ฝ่ายขาย">ฝ่ายขาย</option>
+					<option value="ฝ่ายบัญชี">ฝ่ายบัญชี</option>
 					<option value="แอดมิน">แอดมิน</option>
 				</select>
 				<input

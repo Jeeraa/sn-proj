@@ -1,16 +1,10 @@
 import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import ConfirmModal from './ConfirmModal'
+import { Link } from 'react-router-dom'
 
-export default function UserCard({ name, lastName, email, role }) {
+export default function UserCard({ name, lastName, email, role, userId }) {
 	const [isModalOpen, setIsModalOpen] = useState(false)
-	// const [isShowCardDetailModalOpen, setIsShowCardDetailModalOpen] =
-	// useState(false)
-	// const [selectedStatus, setSelectedStatus] = useState('')
-
-	// const handleUpdateStatus = (status) => {
-	// 	setSelectedStatus(status)
-	// }
 
 	return (
 		<div className="">
@@ -28,11 +22,9 @@ export default function UserCard({ name, lastName, email, role }) {
 					<p className="m-1">บทบาท : {role}</p>
 				</div>
 				<div className="flex items-center space-x-4 ml-4">
-					<PencilSquareIcon className="h-6 w-6 text-sky-500 cursor-pointer" />
-					<TrashIcon
-						className="h-6 w-6 text-red-500 cursor-pointer"
-						onClick={() => setIsModalOpen(true)}
-					/>
+					<Link to={`/all-users/${userId}`} className="text-sky-500 cursor-pointer">
+						<PencilSquareIcon className="h-6 w-6" />
+					</Link>
 				</div>
 			</div>
 			<ConfirmModal

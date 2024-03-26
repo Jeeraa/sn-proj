@@ -9,9 +9,9 @@ export const test = (req, res) => {
 }
 
 export const updateUser = async (req, res, next) => {
-	if (req.user.id !== req.params.id) {
-		return next(errorHandler(401, 'You can update only your account!'))
-	}
+	// if (req.user.id !== req.params.id) {
+	// 	return next(errorHandler(401, 'You can update only your account!'))
+	// }
 	try {
 		if (req.body.password) {
 			req.body.password = bcryptjs.hashSync(req.body.password, 10)
@@ -39,9 +39,9 @@ export const updateUser = async (req, res, next) => {
 }
 
 export const deleteUser = async (req, res, next) => {
-	if (req.user.id !== req.params.id) {
-		return next(errorHandler(401, 'You can update only your account!'))
-	}
+	// if (req.user.id !== req.params.id) {
+	// 	return next(errorHandler(401, 'You can update only your account!'))
+	// }
 	try {
 		await User.findByIdAndDelete(req.params.id)
 		res.status(200).json('User has been deleted...')
@@ -52,8 +52,23 @@ export const deleteUser = async (req, res, next) => {
 
 export const getAllUsers = async (req, res, next) => {
 	try {
-		const users = await User.find({});
-    res.status(200).json(users);
+		const users = await User.find({})
+		res.status(200).json(users)
+	} catch (error) {
+		next(error)
+	}
+}
+
+export const getUserById = async (req, res, next) => {
+	try {
+		const userId = req.params.id
+		const user = await User.findById(userId)
+
+		if (!user) {
+			return res.status(404).json({ message: 'User not found' })
+		}
+
+		res.status(200).json(user)
 	} catch (error) {
 		next(error)
 	}

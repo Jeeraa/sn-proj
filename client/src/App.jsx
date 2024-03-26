@@ -9,6 +9,7 @@ import SignIn from './pages/Signin'
 import PrivateRoute from './components/PrivateRoute'
 import CreateJob from './pages/CreateJob'
 import AllUsers from './pages/AllUsers'
+import EditProfileForAdmin from './pages/EditProfileForAdmin'
 
 export default function App() {
 	return (
@@ -20,6 +21,7 @@ export default function App() {
 					<Route path="/about" element={<About />}></Route>
 					<Route path="/" element={<Home />}></Route>
 					<Route path="/all-users" element={<AllUsers />}></Route>
+					<Route path="/all-users/:userId" element={<EditProfileForAdmin />}></Route>
 					<Route path="/sign-up" element={<SignUp />}></Route>
 					<Route path="/profile" element={<Profile />}></Route>
 					<Route path="/create-job" element={<CreateJob />}></Route>

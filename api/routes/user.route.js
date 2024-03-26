@@ -4,13 +4,15 @@ import {
 	updateUser,
 	deleteUser,
 	getAllUsers,
+	getUserById,
 } from '../controllers/user.controller.js'
 import { verifyToken } from '../utils/verifyUser.js'
 
 const router = express.Router()
 
 router.get('/', test)
-router.get('/allusers', getAllUsers)
+router.get('/allusers', verifyToken, getAllUsers)
+router.get('/allusers/:id', verifyToken, getUserById)
 router.post('/update/:id', verifyToken, updateUser)
 router.delete('/delete/:id', verifyToken, deleteUser)
 
