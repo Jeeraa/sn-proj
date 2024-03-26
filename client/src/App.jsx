@@ -1,7 +1,6 @@
 import './styles.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
-import About from './pages/About'
 import SignUp from './pages/SignUp'
 import Profile from './pages/Profile'
 import Header from './components/Header'
@@ -10,6 +9,7 @@ import PrivateRoute from './components/PrivateRoute'
 import CreateJob from './pages/CreateJob'
 import AllUsers from './pages/AllUsers'
 import EditProfileForAdmin from './pages/EditProfileForAdmin'
+import AllJobs from './pages/AllJobs'
 
 export default function App() {
 	return (
@@ -18,8 +18,9 @@ export default function App() {
 			<Routes>
 				<Route path="/sign-in" element={<SignIn />}></Route>
 				<Route element={<PrivateRoute />}>
-					<Route path="/about" element={<About />}></Route>
+					{/* <Route path="/history" element={<History />}></Route> */}
 					<Route path="/" element={<Home />}></Route>
+					<Route path="/all-jobs" element={<AllJobs />}></Route>
 					<Route path="/all-users" element={<AllUsers />}></Route>
 					<Route path="/all-users/:userId" element={<EditProfileForAdmin />}></Route>
 					<Route path="/sign-up" element={<SignUp />}></Route>

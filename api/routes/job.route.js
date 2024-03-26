@@ -2,8 +2,8 @@ import express from 'express'
 import {
 	createJob,
 	updateJob,
-	updateWorkStepStatus,
 	getJob,
+	getJobById,
 	deleteJob,
 } from '../controllers/job.controller.js'
 import { verifyToken } from '../utils/verifyUser.js'
@@ -11,10 +11,11 @@ import { verifyToken } from '../utils/verifyUser.js'
 const router = express.Router()
 
 router.post('/createJob', verifyToken, createJob)
-router.get('/:jobId', verifyToken, getJob)
-router.put('/:jobId', verifyToken, updateJob)
-router.put('/:jobId/work-step/:workStepId', verifyToken, updateWorkStepStatus)
-router.delete('/:id', verifyToken, deleteJob)
+router.get('/alljobs', verifyToken, getJob)
+router.get('/alljobs/:id', verifyToken, getJobById)
+router.post('/updatejob/:id', verifyToken, updateJob)
+router.delete('/deletejob/:id', verifyToken, deleteJob)
+// router.put('/:jobId/work-step/:workStepId', verifyToken, updateWorkStepStatus)
 
 // // Create a new job
 // router.post('/', verifyToken, createJob)

@@ -26,7 +26,7 @@ export default function CreateJob() {
 				setError(true)
 				return
 			}
-			navigate('/')
+			navigate('/all-jobs')
 		} catch (error) {
 			setError(true)
 		}

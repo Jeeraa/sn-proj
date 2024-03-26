@@ -25,8 +25,8 @@ const jobSchema = new mongoose.Schema(
 		budget: { type: Number, required: true },
 		profit: { type: Number, required: true },
 		dueDate: { type: Date, required: true },
-		workSteps: [workStepSchema],
-		createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+		// workSteps: [workStepSchema],
+		// createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
 	},
 	{ timestamps: true }
 )
