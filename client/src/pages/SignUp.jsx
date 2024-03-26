@@ -30,7 +30,7 @@ export default function SignUp() {
 				setError(true)
 				return
 			}
-			navigate('/sign-in')
+			navigate('/all-users')
 		} catch (error) {
 			setLoading(false)
 			setError(true)

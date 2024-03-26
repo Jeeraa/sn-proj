@@ -4,12 +4,64 @@ import bcryptjs from 'bcryptjs'
 import Job from '../models/job.model.js'
 
 // Add a new job
-export const createJob = async (req, res) => {
+export const createJob = async (req, res, next) => {
+	const {
+		title,
+		company,
+		companyType,
+		description,
+		budget,
+		profit,
+		dueDate,
+		workSteps,
+		createdBy,
+	} = req.body
+
+	const processes = [
+		{
+			process: 'การประมูล',
+			allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายขาย'],
+			status: '',
+		},
+		{
+			process: 'การเซ็นสัญญา',
+			allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายขาย'],
+			status: '',
+		},
+		{
+			process: 'การสั่งซื้อ',
+			allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายบัญชี'],
+			status: '',
+		},
+		{
+			process: 'การส่งมอบ',
+			allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายขาย'],
+			status: '',
+		},
+		{
+			process: 'การชำระเงิน',
+			allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายบัญชี'],
+			status: '',
+		},
+	]
+
+	const newJob = new Job({
+		title,
+		company,
+		companyType,
+		description,
+		budget,
+		profit,
+		dueDate,
+		workSteps,
+		createdBy,
+	})
+
 	try {
-		const job = await Job.create(req.body)
-		res.status(201).json(job)
+		await newJob.save()
+		res.status(201).json({ message: 'Create job successfully' })
 	} catch (error) {
-		res.status(500).json({ error: error.message })
+		next(error)
 	}
 }
 
