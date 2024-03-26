@@ -12,9 +12,9 @@ import {
 	updateUserStart,
 	updateUserSuccess,
 	updateUserFailure,
-	deleteUserStart,
-	deleteUserSuccess,
-	deleteUserFailure,
+	// deleteUserStart,
+	// deleteUserSuccess,
+	// deleteUserFailure,
 	signOut,
 } from '../redux/user/userSlice'
 
@@ -25,7 +25,7 @@ export default function Profile() {
 	const [imageError, setImageError] = useState(false)
 	const [formData, setFormData] = useState({})
 	const [updateSuccess, setUpdateSuccess] = useState(false)
-	const { currentUser, loading, error } = useSelector((state) => state.user)
+	const { currentUser, error } = useSelector((state) => state.user)
 	const dispatch = useDispatch()
 	useEffect(() => {
 		if (image) {
@@ -83,22 +83,22 @@ export default function Profile() {
 		}
 	}
 
-	const handleDeleteAccount = async () => {
-		try {
-			dispatch(deleteUserStart())
-			const res = await fetch(`/api/user/delete/${currentUser._id}`, {
-				method: 'DELETE',
-			})
-			const data = await res.json()
-			if (data.success === false) {
-				dispatch(deleteUserFailure(data))
-				return
-			}
-			dispatch(deleteUserSuccess(data))
-		} catch (error) {
-			dispatch(deleteUserFailure(error))
-		}
-	}
+	// const handleDeleteAccount = async () => {
+	// 	try {
+	// 		dispatch(deleteUserStart())
+	// 		const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+	// 			method: 'DELETE',
+	// 		})
+	// 		const data = await res.json()
+	// 		if (data.success === false) {
+	// 			dispatch(deleteUserFailure(data))
+	// 			return
+	// 		}
+	// 		dispatch(deleteUserSuccess(data))
+	// 	} catch (error) {
+	// 		dispatch(deleteUserFailure(error))
+	// 	}
+	// }
 
 	const handleSignout = async () => {
 		try {
