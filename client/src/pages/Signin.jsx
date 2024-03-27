@@ -33,7 +33,7 @@ export default function SignIn() {
 				return
 			}
 			dispatch(signInSuccess(data))
-			navigate('/')
+			navigate('/all-jobs')
 		} catch (error) {
 			dispatch(signInFailure(error))
 		}

@@ -2,11 +2,10 @@ import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import companyLogo from '../assets/company-logo.png'
 import { useState } from 'react'
-import { BellIcon } from '@heroicons/react/24/outline'
+import { BellIcon, UserCircleIcon } from '@heroicons/react/24/outline'
 
 const navigation = [
-	{ name: 'ติดตามความคืบหน้า', link: '/', isSelected: false },
-	{ name: 'ติดตามความคืบหน้า2', link: '/all-jobs', isSelected: false },
+	{ name: 'ติดตามความคืบหน้า', link: '/all-jobs', isSelected: false },
 	{ name: 'รายการงานย้อนหลัง', link: '/history', isSelected: false },
 ]
 
@@ -68,27 +67,18 @@ export default function Header() {
 						</Link>
 					</ul> */}
 				</div>
-				<ul className="flex gap-4">
-					<button
-						type="button"
-						className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-					>
-						<span className="absolute -inset-1.5" />
-						<span className="sr-only">View notifications</span>
-						<BellIcon className="h-6 w-6" aria-hidden="true" />
-					</button>
-					<Link to="/profile">
-						{currentUser ? (
-							<img
-								src={currentUser.profilePicture}
-								alt="profile"
-								className="h-7 w-7 rounded-full object-cover"
-							></img>
-						) : (
-							<li>Sign In</li>
-						)}
-					</Link>
-				</ul>
+
+				<Link to="/profile">
+					{currentUser ? (
+						<img
+							src={currentUser.profilePicture}
+							alt="profile"
+							className="h-7 w-7 rounded-full object-cover"
+						></img>
+					) : (
+						''
+					)}
+				</Link>
 			</div>
 		</div>
 	)

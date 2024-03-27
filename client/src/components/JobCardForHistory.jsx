@@ -13,7 +13,7 @@ import { Link } from 'react-router-dom'
 import ModalForJobDetail from './ModalForJobDetail'
 import Modal from './Modal'
 
-export default function JobCard({
+export default function JobCardForHistory({
 	jobId,
 	title,
 	company,
@@ -182,9 +182,6 @@ export default function JobCard({
 				</div> */}
 
 				<div className="flex items-center space-x-4 ml-4">
-					<Link to={`/all-jobs/${jobId}`} className="text-sky-500 cursor-pointer">
-						<PencilSquareIcon className="h-6 w-6 mr-5" />
-					</Link>
 					<button
 						className="text-sky-500 cursor-pointer"
 						onClick={() => setIsModalOpen(true)}
@@ -275,7 +272,7 @@ export default function JobCard({
 // 	}).isRequired,
 // }
 
-JobCard.propTypes = {
+JobCardForHistory.propTypes = {
 	jobId: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 	company: PropTypes.string.isRequired,

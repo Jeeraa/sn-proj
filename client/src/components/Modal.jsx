@@ -5,22 +5,17 @@ import {
 } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 
-export default function Modal({
-	isOpen,
-	onClose,
-	selectedProcess,
-	onUpdateStatus,
-}) {
+export default function Modal({ isOpen, onClose, onUpdateStatus }) {
 	const [selectedStatus, setSelectedStatus] = useState('')
 
-	// const handleUpdateStatus = () => {
-	// 	onUpdateStatus(selectedStatus)
-	// 	onClose()
-	// }
 	const handleUpdateStatus = () => {
 		onUpdateStatus(selectedStatus)
-		setSelectedStatus('') // Reset the selected status after update
+		onClose()
 	}
+	// const handleUpdateStatus = () => {
+	// 	onUpdateStatus(selectedStatus)
+	// 	setSelectedStatus('') // Reset the selected status after update
+	// }
 
 	return (
 		<div
