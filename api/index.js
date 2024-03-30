@@ -6,6 +6,7 @@ import userRoutes from './routes/user.route.js'
 import jobRoutes from './routes/job.route.js'
 import authRoutes from './routes/auth.route.js'
 import processRoutes from './routes/process.route.js'
+import logRoutes from './routes/log.route.js'
 import cookieParser from 'cookie-parser'
 import path from 'path'
 
@@ -41,6 +42,7 @@ app.listen(3000, () => {
 app.use('/api/user', userRoutes)
 app.use('/api/job', jobRoutes)
 app.use('/api/process', processRoutes)
+app.use('/api/log', logRoutes)
 app.use('/api/auth', authRoutes)
 
 app.use((err, req, res, next) => {

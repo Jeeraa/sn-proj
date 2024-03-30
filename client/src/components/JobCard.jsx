@@ -23,6 +23,8 @@ export default function JobCard({
 	profit,
 	dueDate,
 	processId,
+	companyType,
+	description,
 }) {
 	const [formData, setFormData] = useState({})
 	const [isModalOpen, setIsModalOpen] = useState(false)
@@ -92,8 +94,9 @@ export default function JobCard({
 		}
 	}
 
-	const handleStatusUpdate = (updatedProcessData) => {
+	const handleStatusUpdate = async (updatedProcessData) => {
 		setFormData(updatedProcessData)
+		// console.log(updatedProcessData)
 	}
 
 	return (
@@ -296,8 +299,11 @@ export default function JobCard({
 				budget={budget}
 				profit={profit}
 				dueDate={dueDate}
+				companyType={companyType}
+				description={description}
 			/>
 			<Modal
+				jobId={jobId}
 				isOpen={isModalOpen2}
 				onClose={() => setIsModalOpen2(false)}
 				processData={formData}
@@ -305,6 +311,7 @@ export default function JobCard({
 				onStatusUpdate={handleStatusUpdate}
 			/>
 			<Modal
+				jobId={jobId}
 				isOpen={isModalOpen3}
 				onClose={() => setIsModalOpen3(false)}
 				processData={formData}
@@ -312,6 +319,7 @@ export default function JobCard({
 				onStatusUpdate={handleStatusUpdate}
 			/>
 			<Modal
+				jobId={jobId}
 				isOpen={isModalOpen4}
 				onClose={() => setIsModalOpen4(false)}
 				processData={formData}
@@ -319,6 +327,7 @@ export default function JobCard({
 				onStatusUpdate={handleStatusUpdate}
 			/>
 			<Modal
+				jobId={jobId}
 				isOpen={isModalOpen5}
 				onClose={() => setIsModalOpen5(false)}
 				processData={formData}
@@ -326,6 +335,7 @@ export default function JobCard({
 				onStatusUpdate={handleStatusUpdate}
 			/>
 			<Modal
+				jobId={jobId}
 				isOpen={isModalOpen6}
 				onClose={() => setIsModalOpen6(false)}
 				processData={formData}
@@ -340,7 +350,8 @@ JobCard.propTypes = {
 	jobId: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 	company: PropTypes.string.isRequired,
-	companyType: PropTypes.string,
+	companyType: PropTypes.string.isRequired,
+	description: PropTypes.string.isRequired,
 	budget: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 	profit: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 	dueDate: PropTypes.instanceOf(Date).isRequired,

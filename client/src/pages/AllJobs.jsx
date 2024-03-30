@@ -8,6 +8,7 @@ export default function AllJobs() {
 	const [jobs, setJobs] = useState([])
 	const [processes, setProcesses] = useState([])
 	const { currentUser } = useSelector((state) => state.user)
+	const [filteredJob, setFilteredJob] = useState([])
 
 	// Fetch All Job
 	useEffect(() => {
@@ -59,6 +60,18 @@ export default function AllJobs() {
 		}
 	}, [jobs])
 
+	useEffect(() => {
+		const today = new Date()
+
+		// Filter jobs where the due date has passed
+		const filteredJobs = jobs.filter((job) => {
+			const dueDate = new Date(job.dueDate)
+			return dueDate >= today
+		})
+
+		setFilteredJob(filteredJobs)
+	}, [jobs])
+
 	return (
 		<div className="px-4 py-12 max-w-6xl mx-auto">
 			{showNotification && <Notification />}
@@ -83,7 +96,7 @@ export default function AllJobs() {
 			<h1 className="text-xl font-bold mb-4 text-slate-700">
 				ติดตามความคืบหน้างาน
 			</h1>
-			{jobs.map((job, index) => {
+			{filteredJob.map((job, index) => {
 				const process = processes.find((p) => p.jobId === job._id)
 				return (
 					<JobCard
@@ -91,6 +104,8 @@ export default function AllJobs() {
 						jobId={job._id}
 						title={job.title}
 						company={job.company}
+						companyType={job.companyType}
+						description={job.description}
 						budget={job.budget}
 						profit={job.profit}
 						dueDate={job.dueDate}

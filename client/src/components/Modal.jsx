@@ -5,8 +5,11 @@ import {
 } from '@heroicons/react/24/outline'
 import { useState } from 'react'
 import PropTypes from 'prop-types'
+import axios from 'axios'
+import { useSelector } from 'react-redux'
 
 export default function Modal({
+	jobId,
 	isOpen,
 	onClose,
 	processName,
@@ -14,6 +17,7 @@ export default function Modal({
 	onStatusUpdate,
 }) {
 	const [selectedStatus, setSelectedStatus] = useState('')
+	const { currentUser } = useSelector((state) => state.user)
 
 	const handleUpdateStatus = async () => {
 		try {
@@ -49,6 +53,21 @@ export default function Modal({
 			} else {
 				// Status update failed
 				console.error('Error updating status:', data.error)
+			}
+
+			const res2 = await axios.post('/api/log/createLog', {
+				jobId: jobId,
+				process: processName,
+				status: selectedStatus,
+				updateBy: currentUser.name,
+			})
+
+			const data2 = await res2.data
+			// console.log(data2)
+
+			if (data2.success === false) {
+				// setError(true)
+				return
 			}
 		} catch (error) {
 			console.error('Error updating status:', error)
@@ -120,9 +139,10 @@ export default function Modal({
 }
 
 Modal.propTypes = {
-	isOpen: PropTypes.bool.isRequired,
-	onClose: PropTypes.func.isRequired,
-	processName: PropTypes.string.isRequired,
-	processData: PropTypes.object.isRequired,
-	onStatusUpdate: PropTypes.func.isRequired,
+	jobId: PropTypes.string,
+	isOpen: PropTypes.bool,
+	onClose: PropTypes.func,
+	processName: PropTypes.string,
+	processData: PropTypes.object,
+	onStatusUpdate: PropTypes.func,
 }

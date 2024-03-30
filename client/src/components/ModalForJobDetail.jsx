@@ -1,29 +1,20 @@
 import { XCircleIcon } from '@heroicons/react/24/outline'
+import PropTypes from 'prop-types'
 import { useState } from 'react'
 
 export default function ModalForJobDetail({
 	isOpen,
 	onClose,
-	selectedProcess,
-	onUpdateStatus,
 	jobId,
 	title,
 	company,
 	budget,
 	profit,
 	dueDate,
+	companyType,
+	description,
 }) {
-	const [selectedStatus, setSelectedStatus] = useState('')
-	const [isModalOpen, setIsModalOpen] = useState(false)
-
-	// const handleUpdateStatus = () => {
-	// 	onUpdateStatus(selectedStatus)
-	// 	onClose()
-	// }
-	const handleUpdateStatus = () => {
-		onUpdateStatus(selectedStatus)
-		setSelectedStatus('') // Reset the selected status after update
-	}
+	const [logs, setLogs] = useState([])
 
 	function formatMoney(amount) {
 		// Convert the amount to a string and split it into integer and decimal parts
@@ -67,6 +58,22 @@ export default function ModalForJobDetail({
 		}
 	}
 
+	// Fetch All Log
+	const fetchJobs = async () => {
+		try {
+			const response = await fetch('/api/log/alllogs')
+			const data = await response.json()
+			setLogs(data)
+		} catch (error) {
+			console.error('Error fetching user data:', error)
+		}
+	}
+
+	fetchJobs()
+
+	// Filter logs for the specific jobId
+	const filteredLogs = logs.filter((log) => log.jobId === jobId)
+
 	return (
 		<div
 			className={`px-4 py-12 mx-auto fixed inset-0 flex justify-center items-center ${
@@ -74,23 +81,69 @@ export default function ModalForJobDetail({
 			}`}
 		>
 			<div className="fixed inset-0 bg-gray-900 opacity-50"></div>
-			<div className="bg-white p-8 rounded-lg shadow-lg z-50 w-2/5 h-72">
+			<div className="bg-white p-8 rounded-lg shadow-lg z-50 max-w-5xl mh-auto">
 				<div className="flex justify-end items-end">
 					<button onClick={onClose}>
 						<XCircleIcon className="h-8 w-8" aria-hidden="true" />
 					</button>
 				</div>
 				<h2 className="text-lg font-semibold mb-4 text-center">รายละเอียดงาน</h2>
-				<div className="w-3/5 pr-6">
+				<div className="grid grid-cols-2">
 					<div>
-						<p className="text-sm m-1">ชื่องาน : {title}</p>
-						<p className="text-sm m-1">ชื่อหน่วยงาน : {company}</p>
-						<p className="text-sm m-1">งบ : {formatMoney(budget)} บาท</p>
-						<p className="text-sm m-1">กำไร : {formatMoney(profit)} บาท</p>
-						<p className="text-sm m-1">วันส่งมอบ : {getFormattedDate(dueDate)}</p>
+						<p className="m-1">
+							<span className="text-sm font-semibold">ชื่องาน :</span>{' '}
+							<span className="text-sm">{title}</span>
+						</p>
+						<p className="m-1">
+							<span className="text-sm font-semibold">ชื่อหน่วยงาน :</span>{' '}
+							<span className="text-sm">{company}</span>
+						</p>
+						<p className="m-1">
+							<span className="text-sm font-semibold">ประเภทหน่วยงาน :</span>{' '}
+							<span className="text-sm">{companyType}</span>
+						</p>
+						<p className="m-1">
+							<span className="text-sm font-semibold">งบ :</span>{' '}
+							<span className="text-sm">{formatMoney(budget)}</span>
+						</p>
+						<p className="m-1">
+							<span className="text-sm font-semibold">กำไร :</span>{' '}
+							<span className="text-sm">{formatMoney(profit)}</span>
+						</p>
+						<p className="m-1">
+							<span className="text-sm font-semibold">วันส่งมอบ :</span>{' '}
+							<span className="text-sm">{getFormattedDate(dueDate)}</span>
+						</p>
+						<p className="m-1">
+							<span className="text-sm font-semibold">รายละเอียดงาน :</span>{' '}
+							<span className="text-sm">{description}</span>
+						</p>
+					</div>
+					<div>
+						<p className="text-sm font-semibold">รายละเอียดการอัปเดตสถานะ :</p>
+						{filteredLogs.map((log) => (
+							<div key={log._id}>
+								<p className="text-sm m-1">
+									ขั้นตอน{log.process} สถานะ{log.status}, โดย {log.updateBy} เมื่อ{' '}
+									{getFormattedDate(log.createdAt)}
+								</p>
+							</div>
+						))}
 					</div>
 				</div>
 			</div>
 		</div>
 	)
+}
+ModalForJobDetail.propTypes = {
+	isOpen: PropTypes.bool.isRequired,
+	onClose: PropTypes.func.isRequired,
+	jobId: PropTypes.string.isRequired,
+	title: PropTypes.string.isRequired,
+	company: PropTypes.string.isRequired,
+	budget: PropTypes.number.isRequired,
+	profit: PropTypes.number.isRequired,
+	dueDate: PropTypes.string.isRequired,
+	companyType: PropTypes.string.isRequired,
+	description: PropTypes.string.isRequired,
 }

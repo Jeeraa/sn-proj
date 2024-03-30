@@ -1,4 +1,5 @@
 import {
+	// ArchiveBoxArrowDownIcon,
 	CurrencyDollarIcon,
 	DocumentArrowDownIcon,
 	DocumentCheckIcon,
@@ -12,42 +13,44 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import ModalForJobDetail from './ModalForJobDetail'
 import Modal from './Modal'
+import { useSelector } from 'react-redux'
 
-export default function JobCardForHistory({
+export default function JobCard({
 	jobId,
 	title,
 	company,
 	budget,
 	profit,
 	dueDate,
+	processId,
+	companyType,
+	description,
 }) {
+	const [formData, setFormData] = useState({})
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const [isModalOpen2, setIsModalOpen2] = useState(false)
 	const [isModalOpen3, setIsModalOpen3] = useState(false)
 	const [isModalOpen4, setIsModalOpen4] = useState(false)
 	const [isModalOpen5, setIsModalOpen5] = useState(false)
 	const [isModalOpen6, setIsModalOpen6] = useState(false)
-	const [selectedStatus1, setSelectedStatus1] = useState('')
-	const [selectedStatus2, setSelectedStatus2] = useState('')
-	const [selectedStatus3, setSelectedStatus3] = useState('')
-	const [selectedStatus4, setSelectedStatus4] = useState('')
-	const [selectedStatus5, setSelectedStatus5] = useState('')
+	const { currentUser } = useSelector((state) => state.user)
 
-	const handleUpdateStatus1 = (status) => {
-		setSelectedStatus1(status)
-	}
-	const handleUpdateStatus2 = (status) => {
-		setSelectedStatus2(status)
-	}
-	const handleUpdateStatus3 = (status) => {
-		setSelectedStatus3(status)
-	}
-	const handleUpdateStatus4 = (status) => {
-		setSelectedStatus4(status)
-	}
-	const handleUpdateStatus5 = (status) => {
-		setSelectedStatus5(status)
-	}
+	// Fetch Process Data
+	useEffect(() => {
+		const fetchProcessData = async () => {
+			try {
+				// Ensure processes array is not empty
+				const response = await fetch(`/api/process/allprocess/${processId}`)
+				const processData = await response.json({})
+				// console.log(processData.processes[0].status)
+				setFormData(processData)
+			} catch (error) {
+				console.error('Error fetching user data:', error)
+			}
+		}
+
+		fetchProcessData()
+	}, [processId])
 
 	function formatMoney(amount) {
 		// Convert the amount to a string and split it into integer and decimal parts
@@ -91,6 +94,11 @@ export default function JobCardForHistory({
 		}
 	}
 
+	const handleStatusUpdate = async (updatedProcessData) => {
+		setFormData(updatedProcessData)
+		// console.log(updatedProcessData)
+	}
+
 	return (
 		<div className="">
 			<div className="bg-sky-200 shadow-md rounded-lg p-3 flex justify-between items-center mt-5">
@@ -108,138 +116,170 @@ export default function JobCardForHistory({
 				<button
 					type="button"
 					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
-					onClick={() => setIsModalOpen2(true)}
+					onClick={() =>
+						formData.processes?.[0]?.allowedRoles.includes(currentUser.role)
+							? setIsModalOpen2(true)
+							: setIsModalOpen2(false)
+					}
 				>
-					<p className="font-semibold mb-3">การประมูล</p>
+					<p className="font-semibold mb-3">
+						{formData.processes?.[0]?.process ?? ''}
+					</p>
 					<DocumentArrowDownIcon className="h-8 w-8" aria-hidden="true" />
 					<div
 						className={`w-28 text-sm rounded-full ${
-							selectedStatus1 === 'รอดำเนินการ'
+							formData.processes?.[0]?.status === 'รอดำเนินการ'
 								? 'bg-red-400'
-								: selectedStatus1 === 'กำลังดำเนินการ'
+								: formData.processes?.[0]?.status === 'กำลังดำเนินการ'
 								? 'bg-orange-400'
-								: selectedStatus1 === 'เสร็จสิ้น'
+								: formData.processes?.[0]?.status === 'เสร็จสิ้น'
 								? 'bg-emerald-500'
 								: 'bg-sky-400'
 						} text-white mt-3 px-2 py-1 truncate`}
 					>
-						{selectedStatus1}
-					</div>
-				</button>
-				<button
-					type="button"
-					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
-					onClick={() => setIsModalOpen3(true)}
-				>
-					<p className="font-semibold mb-3">การเซ็นสัญญา</p>
-					<DocumentCheckIcon className="h-8 w-8" aria-hidden="true" />
-					<div
-						className={`w-28 text-sm rounded-full ${
-							selectedStatus2 === 'รอดำเนินการ'
-								? 'bg-red-400'
-								: selectedStatus2 === 'กำลังดำเนินการ'
-								? 'bg-orange-400'
-								: selectedStatus2 === 'เสร็จสิ้น'
-								? 'bg-emerald-500'
-								: 'bg-sky-400'
-						} text-white mt-3 px-2 py-1 truncate`}
-					>
-						{selectedStatus2}
-					</div>
-				</button>
-				<button
-					type="button"
-					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
-					onClick={() => setIsModalOpen4(true)}
-				>
-					<p className="font-semibold mb-3">การสั่งซื้อ</p>
-					<ShoppingCartIcon className="h-8 w-8" aria-hidden="true" />
-					<div
-						className={`w-28 text-sm rounded-full ${
-							selectedStatus3 === 'รอดำเนินการ'
-								? 'bg-red-400'
-								: selectedStatus3 === 'กำลังดำเนินการ'
-								? 'bg-orange-400'
-								: selectedStatus3 === 'เสร็จสิ้น'
-								? 'bg-emerald-500'
-								: 'bg-sky-400'
-						} text-white mt-3 px-2 py-1 truncate`}
-					>
-						{selectedStatus3}
-					</div>
-				</button>
-				<button
-					type="button"
-					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
-					onClick={() => setIsModalOpen5(true)}
-				>
-					<p className="font-semibold mb-3">การส่งมอบ</p>
-					<TruckIcon className="h-8 w-8" aria-hidden="true" />
-					<div
-						className={`w-28 text-sm rounded-full ${
-							selectedStatus4 === 'รอดำเนินการ'
-								? 'bg-red-400'
-								: selectedStatus4 === 'กำลังดำเนินการ'
-								? 'bg-orange-400'
-								: selectedStatus4 === 'เสร็จสิ้น'
-								? 'bg-emerald-500'
-								: 'bg-sky-400'
-						} text-white mt-3 px-2 py-1 truncate`}
-					>
-						{selectedStatus4}
-					</div>
-				</button>
-				<button
-					type="button"
-					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
-					onClick={() => setIsModalOpen6(true)}
-				>
-					<p className="font-semibold mb-3">การชำระเงิน</p>
-					<CurrencyDollarIcon className="h-8 w-8" aria-hidden="true" />
-					<div
-						className={`w-28 text-sm rounded-full ${
-							selectedStatus5 === 'รอดำเนินการ'
-								? 'bg-red-400'
-								: selectedStatus5 === 'กำลังดำเนินการ'
-								? 'bg-orange-400'
-								: selectedStatus5 === 'เสร็จสิ้น'
-								? 'bg-emerald-500'
-								: 'bg-sky-400'
-						} text-white mt-3 px-2 py-1 truncate`}
-					>
-						{selectedStatus5}
+						{formData.processes?.[0]?.status ?? ''}
 					</div>
 				</button>
 
-				{/* <div className="flex justify-between items-center space-x-5">
-					{job.status.map((step, index) => (
-						<button
-							key={index}
-							type="button"
-							className="max-w-lg mx-auto flex flex-col items-center mb-1 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
-							onClick={() => setIsModalOpen(true)}
-							disabled={
-								index > 0 && !isProcessCompleted(job.status[index - 1].process)
-							}
-						>
-							<p className="font-semibold mb-3">{step.process}</p>
-							{getProcessIcon(step.process)}
-							<div className="w-28 text-sm rounded-full bg-sky-500 text-white mt-3 px-2 py-1 truncate">
-								{selectedStatus[step.process] || step.status}
-							</div>
-						</button>
-					))}
-				</div> */}
+				{/* Process 2 */}
+				<button
+					type="button"
+					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+					onClick={() =>
+						formData.processes?.[1]?.allowedRoles.includes(currentUser.role) &&
+						formData.processes?.[0]?.status === 'เสร็จสิ้น'
+							? setIsModalOpen3(true)
+							: setIsModalOpen3(false)
+					}
+				>
+					<p className="font-semibold mb-3">
+						{formData.processes?.[1]?.process ?? ''}
+					</p>
+					<DocumentCheckIcon className="h-8 w-8" aria-hidden="true" />
+					<div
+						className={`w-28 text-sm rounded-full ${
+							formData.processes?.[1]?.status === 'รอดำเนินการ'
+								? 'bg-red-400'
+								: formData.processes?.[1]?.status === 'กำลังดำเนินการ'
+								? 'bg-orange-400'
+								: formData.processes?.[1]?.status === 'เสร็จสิ้น'
+								? 'bg-emerald-500'
+								: 'bg-sky-400'
+						} text-white mt-3 px-2 py-1 truncate`}
+					>
+						{formData.processes?.[1]?.status ?? ''}
+					</div>
+				</button>
+
+				{/* Process 3 */}
+				<button
+					type="button"
+					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+					onClick={() =>
+						formData.processes?.[2]?.allowedRoles.includes(currentUser.role) &&
+						formData.processes?.[0]?.status === 'เสร็จสิ้น' &&
+						formData.processes?.[1]?.status === 'เสร็จสิ้น'
+							? setIsModalOpen4(true)
+							: setIsModalOpen4(false)
+					}
+				>
+					<p className="font-semibold mb-3">
+						{formData.processes?.[2]?.process ?? ''}
+					</p>
+					<ShoppingCartIcon className="h-8 w-8" aria-hidden="true" />
+					<div
+						className={`w-28 text-sm rounded-full ${
+							formData.processes?.[2]?.status === 'รอดำเนินการ'
+								? 'bg-red-400'
+								: formData.processes?.[2]?.status === 'กำลังดำเนินการ'
+								? 'bg-orange-400'
+								: formData.processes?.[2]?.status === 'เสร็จสิ้น'
+								? 'bg-emerald-500'
+								: 'bg-sky-400'
+						} text-white mt-3 px-2 py-1 truncate`}
+					>
+						{formData.processes?.[2]?.status ?? ''}
+					</div>
+				</button>
+
+				{/* Process 4 */}
+				<button
+					type="button"
+					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+					onClick={() =>
+						formData.processes?.[3]?.allowedRoles.includes(currentUser.role) &&
+						formData.processes?.[0]?.status === 'เสร็จสิ้น' &&
+						formData.processes?.[1]?.status === 'เสร็จสิ้น' &&
+						formData.processes?.[2]?.status === 'เสร็จสิ้น'
+							? setIsModalOpen5(true)
+							: setIsModalOpen5(false)
+					}
+				>
+					<p className="font-semibold mb-3">
+						{formData.processes?.[3]?.process ?? ''}
+					</p>
+					<TruckIcon className="h-8 w-8" aria-hidden="true" />
+					<div
+						className={`w-28 text-sm rounded-full ${
+							formData.processes?.[3]?.status === 'รอดำเนินการ'
+								? 'bg-red-400'
+								: formData.processes?.[3]?.status === 'กำลังดำเนินการ'
+								? 'bg-orange-400'
+								: formData.processes?.[3]?.status === 'เสร็จสิ้น'
+								? 'bg-emerald-500'
+								: 'bg-sky-400'
+						} text-white mt-3 px-2 py-1 truncate`}
+					>
+						{formData.processes?.[3]?.status ?? ''}
+					</div>
+				</button>
+
+				{/* Process 5 */}
+				<button
+					type="button"
+					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
+					onClick={() =>
+						formData.processes?.[4]?.allowedRoles.includes(currentUser.role) &&
+						formData.processes?.[0]?.status === 'เสร็จสิ้น' &&
+						formData.processes?.[1]?.status === 'เสร็จสิ้น' &&
+						formData.processes?.[2]?.status === 'เสร็จสิ้น' &&
+						formData.processes?.[3]?.status === 'เสร็จสิ้น'
+							? setIsModalOpen6(true)
+							: setIsModalOpen6(false)
+					}
+				>
+					<p className="font-semibold mb-3">
+						{formData.processes?.[4]?.process ?? ''}
+					</p>
+					<CurrencyDollarIcon className="h-8 w-8" aria-hidden="true" />
+					<div
+						className={`w-28 text-sm rounded-full ${
+							formData.processes?.[4]?.status === 'รอดำเนินการ'
+								? 'bg-red-400'
+								: formData.processes?.[4]?.status === 'กำลังดำเนินการ'
+								? 'bg-orange-400'
+								: formData.processes?.[4]?.status === 'เสร็จสิ้น'
+								? 'bg-emerald-500'
+								: 'bg-sky-400'
+						} text-white mt-3 px-2 py-1 truncate`}
+					>
+						{formData.processes?.[4]?.status ?? ''}
+					</div>
+				</button>
 
 				<div className="flex items-center space-x-4 ml-4">
 					<button
 						className="text-sky-500 cursor-pointer"
 						onClick={() => setIsModalOpen(true)}
 					>
-						<DocumentMagnifyingGlassIcon className="h-6 w-6 mr-5" />{' '}
+						<DocumentMagnifyingGlassIcon className="h-6 w-6 mr-1" />
 					</button>
+					{/* <button className="text-sky-500 cursor-pointer" onClick={() => ''}>
+						<ArchiveBoxArrowDownIcon className="h-6 w-6 mr-1" />
+					</button> */}
 				</div>
 			</div>
+
 			{/* Render the Modal component */}
 			<ModalForJobDetail
 				isOpen={isModalOpen}
@@ -252,82 +292,61 @@ export default function JobCardForHistory({
 				budget={budget}
 				profit={profit}
 				dueDate={dueDate}
+				companyType={companyType}
+				description={description}
 			/>
-			<Modal
+			{/* <Modal
+				jobId={jobId}
 				isOpen={isModalOpen2}
 				onClose={() => setIsModalOpen2(false)}
-				onUpdateStatus={handleUpdateStatus1}
+				processData={formData}
+				processName={formData.processes?.[0]?.process}
+				onStatusUpdate={handleStatusUpdate}
 			/>
 			<Modal
+				jobId={jobId}
 				isOpen={isModalOpen3}
 				onClose={() => setIsModalOpen3(false)}
-				onUpdateStatus={handleUpdateStatus2}
+				processData={formData}
+				processName={formData.processes?.[1]?.process}
+				onStatusUpdate={handleStatusUpdate}
 			/>
 			<Modal
+				jobId={jobId}
 				isOpen={isModalOpen4}
 				onClose={() => setIsModalOpen4(false)}
-				onUpdateStatus={handleUpdateStatus3}
+				processData={formData}
+				processName={formData.processes?.[2]?.process}
+				onStatusUpdate={handleStatusUpdate}
 			/>
 			<Modal
+				jobId={jobId}
 				isOpen={isModalOpen5}
 				onClose={() => setIsModalOpen5(false)}
-				onUpdateStatus={handleUpdateStatus4}
+				processData={formData}
+				processName={formData.processes?.[3]?.process}
+				onStatusUpdate={handleStatusUpdate}
 			/>
 			<Modal
+				jobId={jobId}
 				isOpen={isModalOpen6}
 				onClose={() => setIsModalOpen6(false)}
-				onUpdateStatus={handleUpdateStatus5}
-			/>
+				processData={formData}
+				processName={formData.processes?.[4]?.process}
+				onStatusUpdate={handleStatusUpdate}
+			/> */}
 		</div>
 	)
 }
 
-// Helper function to get the appropriate icon for each process
-// const getProcessIcon = (process) => {
-// 	switch (process) {
-// 		case 'การประมูล':
-// 			return <DocumentArrowDownIcon className="h-8 w-8" aria-hidden="true" />
-// 		case 'การเซ็นสัญญา':
-// 			return <DocumentCheckIcon className="h-8 w-8" aria-hidden="true" />
-// 		case 'การสั่งซื้อ':
-// 			return <ShoppingCartIcon className="h-8 w-8" aria-hidden="true" />
-// 		case 'การส่งมอบ':
-// 			return <TruckIcon className="h-8 w-8" aria-hidden="true" />
-// 		case 'การชำระเงิน':
-// 			return <CurrencyDollarIcon className="h-8 w-8" aria-hidden="true" />
-// 		default:
-// 			return null
-// 	}
-// }
-
-// JobCard.propTypes = {
-// 	job: PropTypes.shape({
-// 		title: PropTypes.string.isRequired,
-// 		description: PropTypes.string.isRequired,
-// 		company: PropTypes.string.isRequired,
-// 		budget: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-// 		profit: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-// 		dueDate: PropTypes.instanceOf(Date).isRequired,
-// 		status: PropTypes.arrayOf(
-// 			PropTypes.shape({
-// 				process: PropTypes.string.isRequired,
-// 				allowedRoles: PropTypes.arrayOf(PropTypes.string).isRequired,
-// 				status: PropTypes.string.isRequired,
-// 			})
-// 		).isRequired,
-// 	}).isRequired,
-// 	currentUser: PropTypes.shape({
-// 		_id: PropTypes.string.isRequired,
-// 		role: PropTypes.string.isRequired,
-// 	}).isRequired,
-// }
-
-JobCardForHistory.propTypes = {
+JobCard.propTypes = {
 	jobId: PropTypes.string.isRequired,
 	title: PropTypes.string.isRequired,
 	company: PropTypes.string.isRequired,
-	companyType: PropTypes.string,
+	companyType: PropTypes.string.isRequired,
+	description: PropTypes.string.isRequired,
 	budget: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 	profit: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
 	dueDate: PropTypes.instanceOf(Date).isRequired,
+	processId: PropTypes.string,
 }

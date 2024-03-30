@@ -21,18 +21,14 @@ export default function Header() {
 	}, [currentUser])
 
 	const updatedNavigation = isAdmin
-		? [
-				{ name: 'กำหนดสิทธิ์การเข้าถึง', link: '/all-users', isSelected: false },
-		  ]
+		? [{ name: 'กำหนดสิทธิ์การเข้าถึง', link: '/all-users', isSelected: false }]
 		: navigation
 
 	return (
 		<div className="bg-sky-500">
 			<div className="flex justify-between items-center max-w-6xl mx-auto p-3">
 				<div className="flex items-center">
-					<Link to="/all-users">
-						<img className="h-8 w-auto" src={companyLogo} alt="companyLogo" />
-					</Link>
+					<img className="h-8 w-auto" src={companyLogo} alt="companyLogo" />
 					<div className="hidden sm:ml-6 sm:block">
 						<div className="flex space-x-4">
 							{updatedNavigation.map((item) => (
