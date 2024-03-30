@@ -23,7 +23,7 @@ export default function EditJob() {
 	const [updateSuccess, setUpdateSuccess] = useState(false)
 	const { error, currentUser } = useSelector((state) => state.user)
 	const dispatch = useDispatch()
-	const isBoss = currentUser.role === 'แอดมิน'
+	const isBoss = currentUser.role === 'ผู้บริหาร'
 
 	useEffect(() => {
 		const fetchJobData = async () => {
@@ -125,7 +125,7 @@ export default function EditJob() {
 
 			dispatch(deleteJobSuccess(data))
 			dispatch(deleteProcessSuccess(data2))
-			navigate('/all-jobs')
+			// navigate('/all-jobs')
 		} catch (error) {
 			dispatch(deleteJobFailure(error))
 			dispatch(deleteProcessFailure(error))
@@ -214,25 +214,23 @@ export default function EditJob() {
 						</div>
 
 						<div className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-							{/* <Link to={`/all-jobs`} className="block"> */}
 							<button
 								onClick={handleSubmit}
 								className="w-full h-full bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
 							>
 								อัปเดตข้อมูล
 							</button>
-							{/* </Link> */}
 						</div>
 
 						<div className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
-							{/* <Link to={`/all-jobs`} className="block"> */}
-							<button
-								onClick={handleDelete}
-								className="w-full h-full bg-red-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
-							>
-								ลบงาน
-							</button>
-							{/* </Link> */}
+							<Link to="/all-jobs" className="block">
+								<button
+									onClick={handleDelete}
+									className="w-full h-full bg-red-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+								>
+									ลบงาน
+								</button>
+							</Link>
 						</div>
 					</form>
 					<p className="text-red-700 mt-5">{error && 'Something Wrong!'}</p>

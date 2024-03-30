@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import companyLogo from '../assets/company-logo.png'
-import { useState } from 'react'
-import { BellIcon, UserCircleIcon } from '@heroicons/react/24/outline'
+import { useState, useEffect } from 'react'
 
 const navigation = [
 	{ name: 'ติดตามความคืบหน้า', link: '/all-jobs', isSelected: false },
@@ -13,38 +12,33 @@ function classNames(...classes) {
 	return classes.filter(Boolean).join(' ')
 }
 
-const handleClick = (item) => {}
-
 export default function Header() {
-	const [isSelected, setIsSelected] = useState(false)
+	const [isAdmin, setIsAdmin] = useState(false)
 	const { currentUser } = useSelector((state) => state.user)
 
-	// Check if the current user has the "admin" role
-	const isAdmin = currentUser?.role === 'แอดมิน'
+	useEffect(() => {
+		setIsAdmin(currentUser?.role === 'แอดมิน')
+	}, [currentUser])
 
-	// Add the "กำหนดสิทธิการเข้าถึง" link to the navigation array if the user is an admin
-	if (isAdmin) {
-		navigation.push({
-			name: 'กำหนดสิทธิการเข้าถึง',
-			link: '/all-users',
-			isSelected: false,
-		})
-	}
+	const updatedNavigation = isAdmin
+		? [
+				{ name: 'กำหนดสิทธิ์การเข้าถึง', link: '/all-users', isSelected: false },
+		  ]
+		: navigation
 
 	return (
 		<div className="bg-sky-500">
 			<div className="flex justify-between items-center max-w-6xl mx-auto p-3">
 				<div className="flex items-center">
-					<Link to="/">
+					<Link to="/all-users">
 						<img className="h-8 w-auto" src={companyLogo} alt="companyLogo" />
 					</Link>
 					<div className="hidden sm:ml-6 sm:block">
 						<div className="flex space-x-4">
-							{navigation.map((item) => (
+							{updatedNavigation.map((item) => (
 								<Link
 									key={item.name}
 									to={item.link}
-									onClick={handleClick(item.isSelected)}
 									className={classNames(
 										item.isSelected
 											? 'bg-gray-900 text-white'
@@ -58,14 +52,6 @@ export default function Header() {
 							))}
 						</div>
 					</div>
-					{/* <ul className="flex gap-4 ml-4">
-						<Link to="/">
-							<li>Home</li>
-						</Link>
-						<Link to="/about">
-							<li>About</li>
-						</Link>
-					</ul> */}
 				</div>
 
 				<Link to="/profile">

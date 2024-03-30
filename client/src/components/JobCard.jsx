@@ -143,7 +143,8 @@ export default function JobCard({
 					type="button"
 					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
 					onClick={() =>
-						formData.processes?.[1]?.allowedRoles.includes(currentUser.role)
+						formData.processes?.[1]?.allowedRoles.includes(currentUser.role) &&
+						formData.processes?.[0]?.status === 'เสร็จสิ้น'
 							? setIsModalOpen3(true)
 							: setIsModalOpen3(false)
 					}
@@ -172,7 +173,9 @@ export default function JobCard({
 					type="button"
 					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
 					onClick={() =>
-						formData.processes?.[2]?.allowedRoles.includes(currentUser.role)
+						formData.processes?.[2]?.allowedRoles.includes(currentUser.role) &&
+						formData.processes?.[0]?.status === 'เสร็จสิ้น' &&
+						formData.processes?.[1]?.status === 'เสร็จสิ้น'
 							? setIsModalOpen4(true)
 							: setIsModalOpen4(false)
 					}
@@ -201,7 +204,10 @@ export default function JobCard({
 					type="button"
 					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
 					onClick={() =>
-						formData.processes?.[3]?.allowedRoles.includes(currentUser.role)
+						formData.processes?.[3]?.allowedRoles.includes(currentUser.role) &&
+						formData.processes?.[0]?.status === 'เสร็จสิ้น' &&
+						formData.processes?.[1]?.status === 'เสร็จสิ้น' &&
+						formData.processes?.[2]?.status === 'เสร็จสิ้น'
 							? setIsModalOpen5(true)
 							: setIsModalOpen5(false)
 					}
@@ -230,7 +236,11 @@ export default function JobCard({
 					type="button"
 					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
 					onClick={() =>
-						formData.processes?.[4]?.allowedRoles.includes(currentUser.role)
+						formData.processes?.[4]?.allowedRoles.includes(currentUser.role) &&
+						formData.processes?.[0]?.status === 'เสร็จสิ้น' &&
+						formData.processes?.[1]?.status === 'เสร็จสิ้น' &&
+						formData.processes?.[2]?.status === 'เสร็จสิ้น' &&
+						formData.processes?.[3]?.status === 'เสร็จสิ้น'
 							? setIsModalOpen6(true)
 							: setIsModalOpen6(false)
 					}
@@ -255,9 +265,13 @@ export default function JobCard({
 				</button>
 
 				<div className="flex items-center space-x-4 ml-4">
-					<Link to={`/all-jobs/${jobId}`} className="text-sky-500 cursor-pointer">
-						<PencilSquareIcon className="h-6 w-6 mr-1" />
-					</Link>
+					{currentUser && currentUser.role === 'ผู้บริหาร' && (
+						<button className="text-sky-500 cursor-pointer">
+							<Link to={`/all-jobs/${jobId}`} className="text-sky-500 cursor-pointer">
+								<PencilSquareIcon className="h-6 w-6 mr-1" />
+							</Link>
+						</button>
+					)}
 					<button
 						className="text-sky-500 cursor-pointer"
 						onClick={() => setIsModalOpen(true)}

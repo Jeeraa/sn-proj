@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import {
 	signInStart,
 	signInSuccess,
@@ -13,9 +13,11 @@ export default function SignIn() {
 	const { loading, error } = useSelector((state) => state.user)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
+
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.id]: e.target.value })
 	}
+
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		try {
@@ -33,11 +35,16 @@ export default function SignIn() {
 				return
 			}
 			dispatch(signInSuccess(data))
-			navigate('/all-jobs')
+			if (data.role === 'แอดมิน') {
+				navigate('/all-users')
+			} else {
+				navigate('/all-jobs')
+			}
 		} catch (error) {
 			dispatch(signInFailure(error))
 		}
 	}
+
 	return (
 		<div className="p-3 max-w-lg mx-auto">
 			<h1 className="text-3xl text-center font-semibold my-7">เข้าสู่ระบบ</h1>

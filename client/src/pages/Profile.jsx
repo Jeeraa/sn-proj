@@ -17,6 +17,7 @@ import {
 	// deleteUserFailure,
 	signOut,
 } from '../redux/user/userSlice'
+import { Link } from 'react-router-dom'
 
 export default function Profile() {
 	const fileRef = useRef(null)
@@ -183,14 +184,19 @@ export default function Profile() {
 				>
 					อัปเดตข้อมูล
 				</button>
-				<button
-					onClick={handleSignout}
-					className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
-				>
-					ออกจากระบบ
-				</button>
+
+				<div className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+					<Link to="/sign-in" className="block">
+						<button
+							onClick={handleSignout}
+							className="w-full h-full bg-red-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+						>
+							ออกจากระบบ
+						</button>
+					</Link>
+				</div>
 			</form>
-			<p className="text-red-700 mt-5 ">{error && 'Something Wrong!'}</p>
+			{/* <p className="text-red-700 mt-5 ">{error && 'Something Wrong!'}</p> */}
 			<p className="text-green-700 mt-5 ">
 				{updateSuccess && 'User is updated successfully'}
 			</p>
