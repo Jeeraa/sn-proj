@@ -17,7 +17,10 @@ export default function Notification(isshow) {
 			className="fixed flex items-center w-full max-w-xs p-4 bg-white rtl:divide-x-reverse divide-gray-200 rounded-lg shadow top-5 right-5 dark:text-gray-400 dark:divide-red-700 space-x dark:bg-red-400"
 			role="alert"
 		>
-			<div className="ms-3 text-sm text-white">มีงานใกล้ถึงกำหนดส่งแล้ว!</div>
+			<div className="ms-3 text-sm text-white">
+				<p> *** มีงานใกล้ถึงกำหนดส่งแล้ว! ***</p>
+			</div>
+
 			<button
 				type="button"
 				className="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-red-800 dark:hover:text-white dark:bg-red-400 dark:hover:bg-red-400"

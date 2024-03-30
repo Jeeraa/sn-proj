@@ -74,7 +74,7 @@ export default function AllJobs() {
 
 	return (
 		<div className="px-4 py-12 max-w-6xl mx-auto">
-			{showNotification && <Notification />}
+			{showNotification && <Notification/>}
 			<div className="m-5 lg:ml-4 lg:mt-0 text-end">
 				{currentUser && currentUser.role === 'ผู้บริหาร' && (
 					<span className="sm:ml-3">
