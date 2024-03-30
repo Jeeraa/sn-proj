@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 
 export default function CreateJob() {
 	const [formData, setFormData] = useState({})
@@ -22,11 +23,61 @@ export default function CreateJob() {
 				body: JSON.stringify(formData),
 			})
 			const data = await res.json()
+
 			if (data.success === false) {
 				setError(true)
 				return
 			}
 			navigate('/all-jobs')
+
+			const jobId = data._id
+			const processes = [
+				{
+					process: 'การประมูล',
+					allowedRoles: ['ผู้บริหาร', 'ฝ่ายขาย'],
+					status: 'รอดำเนินการ',
+				},
+				{
+					process: 'การเซ็นสัญญา',
+					allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายขาย'],
+					status: '',
+				},
+				{
+					process: 'การสั่งซื้อ',
+					allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายบัญชี'],
+					status: '',
+				},
+				{
+					process: 'การส่งมอบ',
+					allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายขาย'],
+					status: '',
+				},
+				{
+					process: 'การชำระเงิน',
+					allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายบัญชี'],
+					status: '',
+				},
+			]
+
+			const res2 = await axios.post('/api/process/createprocess', {
+				jobId,
+				processes,
+			})
+
+			const data2 = await res2.data
+
+			if (data2.success === false) {
+				setError(true)
+				return
+			}
+
+			// // const data2 = await res2.json()
+
+			// if (data.success === false) {
+			// 	setError(true)
+			// 	return
+			// }
+			// navigate('/all-jobs')
 		} catch (error) {
 			setError(true)
 		}

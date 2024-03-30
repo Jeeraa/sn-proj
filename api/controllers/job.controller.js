@@ -32,8 +32,15 @@ import Job from '../models/job.model.js'
 
 // Add a new job
 export const createJob = async (req, res, next) => {
-	const { title, company, companyType, description, budget, profit, dueDate } =
-		req.body
+	const {
+		title,
+		company,
+		companyType,
+		description,
+		budget,
+		profit,
+		dueDate,
+	} = req.body
 
 	const newJob = new Job({
 		title,
@@ -47,7 +54,7 @@ export const createJob = async (req, res, next) => {
 
 	try {
 		await newJob.save()
-		res.status(201).json({ message: 'Create job successfully' })
+		res.status(201).json(newJob)
 	} catch (error) {
 		next(error)
 	}

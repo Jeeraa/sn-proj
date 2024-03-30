@@ -4,18 +4,57 @@ import {
 	ClockIcon,
 } from '@heroicons/react/24/outline'
 import { useState } from 'react'
+import PropTypes from 'prop-types'
 
-export default function Modal({ isOpen, onClose, onUpdateStatus }) {
+export default function Modal({
+	isOpen,
+	onClose,
+	processName,
+	processData,
+	onStatusUpdate,
+}) {
 	const [selectedStatus, setSelectedStatus] = useState('')
 
-	const handleUpdateStatus = () => {
-		onUpdateStatus(selectedStatus)
+	const handleUpdateStatus = async () => {
+		try {
+			// Update the status in processData
+			const updatedProcessData = {
+				...processData,
+				processes: processData.processes.map((process) => {
+					if (process.process === processName) {
+						return {
+							...process,
+							status: selectedStatus,
+						}
+					}
+					return process
+				}),
+			}
+			// console.log(processData._id)
+
+			const res = await fetch(`/api/process/updateprocess/${processData._id}`, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(updatedProcessData),
+			})
+
+			const data = await res.json()
+
+			if (res.ok) {
+				// Status update successful
+				// console.log('Status updated:', data)
+				onStatusUpdate(updatedProcessData)
+			} else {
+				// Status update failed
+				console.error('Error updating status:', data.error)
+			}
+		} catch (error) {
+			console.error('Error updating status:', error)
+		}
 		onClose()
 	}
-	// const handleUpdateStatus = () => {
-	// 	onUpdateStatus(selectedStatus)
-	// 	setSelectedStatus('') // Reset the selected status after update
-	// }
 
 	return (
 		<div
@@ -78,4 +117,12 @@ export default function Modal({ isOpen, onClose, onUpdateStatus }) {
 			</div>
 		</div>
 	)
+}
+
+Modal.propTypes = {
+	isOpen: PropTypes.bool.isRequired,
+	onClose: PropTypes.func.isRequired,
+	processName: PropTypes.string.isRequired,
+	processData: PropTypes.object.isRequired,
+	onStatusUpdate: PropTypes.func.isRequired,
 }

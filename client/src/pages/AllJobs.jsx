@@ -1,11 +1,13 @@
 import { DocumentPlusIcon } from '@heroicons/react/24/outline'
 import JobCard from '../components/JobCard'
 import { useEffect, useState } from 'react'
+import Notification from '../components/Notification'
 
 export default function AllJobs() {
 	const [jobs, setJobs] = useState([])
+	const [processes, setProcesses] = useState([])
 
-	// Fetch user data from the server
+	// Fetch All Job
 	useEffect(() => {
 		const fetchJobs = async () => {
 			try {
@@ -20,8 +22,24 @@ export default function AllJobs() {
 		fetchJobs()
 	}, [])
 
+	// Fetch All Process
+	useEffect(() => {
+		const fetchProcesses = async () => {
+			try {
+				const response = await fetch('/api/process/allprocess')
+				const data = await response.json()
+				setProcesses(data)
+			} catch (error) {
+				console.error('Error fetching user data:', error)
+			}
+		}
+
+		fetchProcesses()
+	})
+
 	return (
 		<div className="px-4 py-12 max-w-6xl mx-auto">
+			<Notification />
 			<div className="m-5 lg:ml-4 lg:mt-0 text-end">
 				<span className="sm:ml-3">
 					<a href="/create-job">
@@ -41,17 +59,21 @@ export default function AllJobs() {
 			<h1 className="text-xl font-bold mb-4 text-slate-700">
 				ติดตามความคืบหน้างาน
 			</h1>
-			{jobs.map((job, index) => (
-				<JobCard
-					key={index}
-					jobId={job._id}
-					title={job.title}
-					company={job.company}
-					budget={job.budget}
-					profit={job.profit}
-					dueDate={job.dueDate}
-				/>
-			))}
+			{jobs.map((job, index) => {
+				const process = processes.find((p) => p.jobId === job._id)
+				return (
+					<JobCard
+						key={index}
+						jobId={job._id}
+						title={job.title}
+						company={job.company}
+						budget={job.budget}
+						profit={job.profit}
+						dueDate={job.dueDate}
+						processId={process ? process._id : null}
+					/>
+				)
+			})}
 		</div>
 	)
 }

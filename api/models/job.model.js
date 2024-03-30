@@ -1,20 +1,18 @@
 import mongoose from 'mongoose'
 
-const workStepSchema = new mongoose.Schema(
-	{
-		process: {
-			type: String,
-		},
-		allowedRoles: [{ type: String }],
-		status: {
-			type: String,
-			enum: ['รอดำเนินการ', 'กำลังดำเนินการ', 'เสร็จสิ้น'],
-			default: '',
-		},
-		updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-	},
-	{ timestamps: true }
-)
+// const workStepSchema = new mongoose.Schema(
+// 	{
+// 		process: { type: String, default: 'การประมูล' },
+// 		allowedRoles: [{ type: String, default: 'แอดมิน' }],
+// 		status: {
+// 			type: String,
+// 			enum: ['รอดำเนินการ', 'กำลังดำเนินการ', 'เสร็จสิ้น'],
+// 			default: '',
+// 		},
+// 		updatedBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+// 	},
+// 	{ timestamps: true }
+// )
 
 const jobSchema = new mongoose.Schema(
 	{

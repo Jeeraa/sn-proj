@@ -21,7 +21,7 @@ export default function App() {
 				<Route path="/sign-in" element={<SignIn />}></Route>
 				<Route element={<PrivateRoute />}>
 					{/* <Route path="/history" element={<History />}></Route> */}
-					<Route path="/" element={<Home />}></Route>
+					{/* <Route path="/" element={<Home />}></Route> */}
 					<Route path="/all-jobs" element={<AllJobs />}></Route>
 					<Route path="/all-jobs/:jobId" element={<EditJob />}></Route>
 					<Route path="/all-users" element={<AllUsers />}></Route>

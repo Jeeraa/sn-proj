@@ -112,7 +112,17 @@ export default function JobCardForHistory({
 				>
 					<p className="font-semibold mb-3">การประมูล</p>
 					<DocumentArrowDownIcon className="h-8 w-8" aria-hidden="true" />
-					<div className="w-28 text-sm rounded-full bg-sky-500 text-white mt-3 px-2 py-1 truncate">
+					<div
+						className={`w-28 text-sm rounded-full ${
+							selectedStatus1 === 'รอดำเนินการ'
+								? 'bg-red-400'
+								: selectedStatus1 === 'กำลังดำเนินการ'
+								? 'bg-orange-400'
+								: selectedStatus1 === 'เสร็จสิ้น'
+								? 'bg-emerald-500'
+								: 'bg-sky-400'
+						} text-white mt-3 px-2 py-1 truncate`}
+					>
 						{selectedStatus1}
 					</div>
 				</button>
@@ -123,7 +133,17 @@ export default function JobCardForHistory({
 				>
 					<p className="font-semibold mb-3">การเซ็นสัญญา</p>
 					<DocumentCheckIcon className="h-8 w-8" aria-hidden="true" />
-					<div className="w-28 text-sm rounded-full bg-sky-500 text-white mt-3 px-2 py-1 truncate">
+					<div
+						className={`w-28 text-sm rounded-full ${
+							selectedStatus2 === 'รอดำเนินการ'
+								? 'bg-red-400'
+								: selectedStatus2 === 'กำลังดำเนินการ'
+								? 'bg-orange-400'
+								: selectedStatus2 === 'เสร็จสิ้น'
+								? 'bg-emerald-500'
+								: 'bg-sky-400'
+						} text-white mt-3 px-2 py-1 truncate`}
+					>
 						{selectedStatus2}
 					</div>
 				</button>
@@ -134,7 +154,17 @@ export default function JobCardForHistory({
 				>
 					<p className="font-semibold mb-3">การสั่งซื้อ</p>
 					<ShoppingCartIcon className="h-8 w-8" aria-hidden="true" />
-					<div className="w-28 text-sm rounded-full bg-sky-500 text-white mt-3 px-2 py-1 truncate">
+					<div
+						className={`w-28 text-sm rounded-full ${
+							selectedStatus3 === 'รอดำเนินการ'
+								? 'bg-red-400'
+								: selectedStatus3 === 'กำลังดำเนินการ'
+								? 'bg-orange-400'
+								: selectedStatus3 === 'เสร็จสิ้น'
+								? 'bg-emerald-500'
+								: 'bg-sky-400'
+						} text-white mt-3 px-2 py-1 truncate`}
+					>
 						{selectedStatus3}
 					</div>
 				</button>
@@ -145,7 +175,17 @@ export default function JobCardForHistory({
 				>
 					<p className="font-semibold mb-3">การส่งมอบ</p>
 					<TruckIcon className="h-8 w-8" aria-hidden="true" />
-					<div className="w-28 text-sm rounded-full bg-sky-500 text-white mt-3 px-2 py-1 truncate">
+					<div
+						className={`w-28 text-sm rounded-full ${
+							selectedStatus4 === 'รอดำเนินการ'
+								? 'bg-red-400'
+								: selectedStatus4 === 'กำลังดำเนินการ'
+								? 'bg-orange-400'
+								: selectedStatus4 === 'เสร็จสิ้น'
+								? 'bg-emerald-500'
+								: 'bg-sky-400'
+						} text-white mt-3 px-2 py-1 truncate`}
+					>
 						{selectedStatus4}
 					</div>
 				</button>
@@ -156,7 +196,17 @@ export default function JobCardForHistory({
 				>
 					<p className="font-semibold mb-3">การชำระเงิน</p>
 					<CurrencyDollarIcon className="h-8 w-8" aria-hidden="true" />
-					<div className="w-28 text-sm rounded-full bg-sky-500 text-white mt-3 px-2 py-1 truncate">
+					<div
+						className={`w-28 text-sm rounded-full ${
+							selectedStatus5 === 'รอดำเนินการ'
+								? 'bg-red-400'
+								: selectedStatus5 === 'กำลังดำเนินการ'
+								? 'bg-orange-400'
+								: selectedStatus5 === 'เสร็จสิ้น'
+								? 'bg-emerald-500'
+								: 'bg-sky-400'
+						} text-white mt-3 px-2 py-1 truncate`}
+					>
 						{selectedStatus5}
 					</div>
 				</button>

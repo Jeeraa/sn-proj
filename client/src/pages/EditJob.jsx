@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 
 import {
 	updateJobStart,
@@ -9,12 +9,17 @@ import {
 	deleteJobStart,
 	deleteJobSuccess,
 	deleteJobFailure,
+	deleteProcessStart,
+	deleteProcessSuccess,
+	deleteProcessFailure,
 } from '../redux/user/userSlice'
 
 export default function EditJob() {
 	const { jobId } = useParams()
+	const { processId } = useParams()
 	const navigate = useNavigate()
 	const [formData, setFormData] = useState({})
+	const [formData2, setFormData2] = useState({})
 	const [updateSuccess, setUpdateSuccess] = useState(false)
 	const { error, currentUser } = useSelector((state) => state.user)
 	const dispatch = useDispatch()
@@ -39,6 +44,20 @@ export default function EditJob() {
 
 		fetchJobData()
 	}, [jobId])
+
+	useEffect(() => {
+		const fetchProcessData = async () => {
+			try {
+				const response = await fetch(`/api/process/allprocess/${processId}`)
+				const processData = await response.json({})
+				setFormData2(processData)
+			} catch (error) {
+				console.error('Error fetching user data:', error)
+			}
+		}
+
+		fetchProcessData()
+	}, [processId])
 
 	const handleChange = (e) => {
 		setFormData({ ...formData, [e.target.id]: e.target.value })
@@ -77,20 +96,39 @@ export default function EditJob() {
 			console.error("You do not have permission to delete other users' accounts.")
 			return
 		}
+
 		try {
 			dispatch(deleteJobStart())
+			dispatch(deleteProcessStart())
+
+			// Delete the job
 			const res = await fetch(`/api/job/deletejob/${jobId}`, {
 				method: 'DELETE',
 			})
 			const data = await res.json()
+
 			if (data.success === false) {
 				dispatch(deleteJobFailure(data))
 				return
 			}
+
+			// Delete the associated processes
+			const res2 = await fetch(`/api/process/deleteprocess/${processId}`, {
+				method: 'DELETE',
+			})
+			const data2 = await res2.json()
+
+			if (data2.success === false) {
+				dispatch(deleteProcessFailure(data2))
+				return
+			}
+
 			dispatch(deleteJobSuccess(data))
+			dispatch(deleteProcessSuccess(data2))
 			navigate('/all-jobs')
 		} catch (error) {
 			dispatch(deleteJobFailure(error))
+			dispatch(deleteProcessFailure(error))
 		}
 	}
 
@@ -174,18 +212,28 @@ export default function EditJob() {
 								/>
 							</div>
 						</div>
-						<button
-							type="submit"
-							className="bg-slate-700 mt-4 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
-						>
-							อัปเดตข้อมูล
-						</button>
-						<button
-							onClick={handleDelete}
-							className="bg-red-700 mt-2 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
-						>
-							ลบงาน
-						</button>
+
+						<div className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+							{/* <Link to={`/all-jobs`} className="block"> */}
+							<button
+								onClick={handleSubmit}
+								className="w-full h-full bg-slate-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+							>
+								อัปเดตข้อมูล
+							</button>
+							{/* </Link> */}
+						</div>
+
+						<div className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
+							{/* <Link to={`/all-jobs`} className="block"> */}
+							<button
+								onClick={handleDelete}
+								className="w-full h-full bg-red-700 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80"
+							>
+								ลบงาน
+							</button>
+							{/* </Link> */}
+						</div>
 					</form>
 					<p className="text-red-700 mt-5">{error && 'Something Wrong!'}</p>
 					<p className="text-green-700 mt-5 ">
