@@ -36,8 +36,8 @@ export default function EditProfileForAdmin() {
 		setFormData({ ...formData, [e.target.id]: e.target.value })
 	}
 
-	const handleSubmit = async () => {
-		// e.preventDefault()
+	const handleSubmit = async (e) => {
+		e.preventDefault()
 
 		if (!isAdmin) {
 			console.error("You do not have permission to edit other users' data.")

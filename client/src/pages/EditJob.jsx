@@ -13,6 +13,7 @@ import {
 	deleteProcessSuccess,
 	deleteProcessFailure,
 } from '../redux/user/userSlice'
+import { XCircleIcon } from '@heroicons/react/24/outline'
 
 export default function EditJob() {
 	const { jobId } = useParams()
@@ -24,19 +25,22 @@ export default function EditJob() {
 	const { error, currentUser } = useSelector((state) => state.user)
 	const dispatch = useDispatch()
 	const isBoss = currentUser.role === 'ผู้บริหาร'
+	const [isSubmit, setIsSubmit] = useState(false)
 
 	useEffect(() => {
 		const fetchJobData = async () => {
 			try {
-				const response = await fetch(`/api/job/alljobs/${jobId}`)
-				const jobData = await response.json({})
-				if (jobData.dueDate) {
-					const formattedDueDate = new Date(jobData.dueDate)
-						.toISOString()
-						.split('T')[0]
-					jobData.dueDate = formattedDueDate
+				if (jobId !== undefined && jobId !== null) {
+					const response = await fetch(`/api/job/alljobs/${jobId}`)
+					const jobData = await response.json({})
+					if (jobData.dueDate) {
+						const formattedDueDate = new Date(jobData.dueDate)
+							.toISOString()
+							.split('T')[0]
+						jobData.dueDate = formattedDueDate
+					}
+					setFormData(jobData) // Populate form data with user data
 				}
-				setFormData(jobData) // Populate form data with user data
 			} catch (error) {
 				console.error('Error fetching user data:', error)
 			}
@@ -48,9 +52,11 @@ export default function EditJob() {
 	useEffect(() => {
 		const fetchProcessData = async () => {
 			try {
-				const response = await fetch(`/api/process/allprocess/${processId}`)
-				const processData = await response.json({})
-				setFormData2(processData)
+				if (processId !== undefined && processId !== null) {
+					const response = await fetch(`/api/process/allprocess/${processId}`)
+					const processData = await response.json({})
+					setFormData2(processData)
+				}
 			} catch (error) {
 				console.error('Error fetching user data:', error)
 			}
@@ -64,6 +70,7 @@ export default function EditJob() {
 	}
 
 	const handleSubmit = async () => {
+		// event.preventDefault()
 		if (!isBoss) {
 			console.error("You do not have permission to edit other users' data.")
 			return
@@ -71,8 +78,8 @@ export default function EditJob() {
 
 		try {
 			dispatch(updateJobStart())
-			const res = await fetch(`/api/job/updatejob/${jobId}`, {
-				method: 'POST',
+			const res = await fetch(`/api/job/alljobs/${jobId}`, {
+				method: 'PUT',
 				headers: {
 					'Content-Type': 'application/json',
 				},
@@ -85,7 +92,6 @@ export default function EditJob() {
 			}
 			dispatch(updateJobSuccess(data))
 			setUpdateSuccess(true)
-			navigate('/all-jobs')
 		} catch (error) {
 			dispatch(updateJobFailure(error))
 		}
@@ -113,18 +119,18 @@ export default function EditJob() {
 			}
 
 			// Delete the associated processes
-			const res2 = await fetch(`/api/process/deleteprocess/${processId}`, {
-				method: 'DELETE',
-			})
-			const data2 = await res2.json()
+			// const res2 = await fetch(`/api/process/deleteprocess/${processId}`, {
+			// 	method: 'DELETE',
+			// })
+			// const data2 = await res2.json()
 
-			if (data2.success === false) {
-				dispatch(deleteProcessFailure(data2))
-				return
-			}
+			// if (data2.success === false) {
+			// 	dispatch(deleteProcessFailure(data2))
+			// 	return
+			// }
 
-			dispatch(deleteJobSuccess(data))
-			dispatch(deleteProcessSuccess(data2))
+			// dispatch(deleteJobSuccess(data))
+			// dispatch(deleteProcessSuccess(data2))
 			// navigate('/all-jobs')
 		} catch (error) {
 			dispatch(deleteJobFailure(error))
@@ -133,14 +139,26 @@ export default function EditJob() {
 	}
 
 	return (
-		<div className="px-4 py-12 max-w-3xl mx-auto">
-			<h1 className="text-xl font-bold mb-4 text-slate-700">แก้ไขรายละเอียดงาน</h1>
+		<div className="px-4 py-4 max-w-3xl mx-auto">
+			<div className="flex justify-between items-center mb-4">
+				<Link
+					to="/all-jobs"
+					className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded"
+				>
+					กลับ
+				</Link>
+			</div>
+
 			<div className="bg-sky-200 shadow-md rounded-lg p-3 flex justify-center items-center">
 				<div className="">
 					<form
-						onSubmit={handleSubmit}
+						// onSubmit={handleSubmit}
 						className="m-2 flex flex-col gap-2 text-gray-900"
 					>
+						<h1 className="text-xl font-bold text-slate-700 text-center mb-5">
+							แก้ไขรายละเอียดงาน
+						</h1>
+
 						<div className="flex flex-row">
 							<label className="mr-3 flex items-center">ชื่องาน</label>
 							<input
@@ -212,7 +230,9 @@ export default function EditJob() {
 								/>
 							</div>
 						</div>
-
+						<p className="text-green-700 mt-5 ">
+							{isSubmit ? 'อัปเดตรายละเอียดงานเรียบร้อย' : ''}
+						</p>
 						<div className="bg-slate-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
 							<button
 								onClick={handleSubmit}
@@ -221,7 +241,6 @@ export default function EditJob() {
 								อัปเดตข้อมูล
 							</button>
 						</div>
-
 						<div className="bg-red-700 text-white p-3 rounded-lg uppercase hover:opacity-95 disabled:opacity-80">
 							<Link to="/all-jobs" className="block">
 								<button
@@ -235,7 +254,7 @@ export default function EditJob() {
 					</form>
 					<p className="text-red-700 mt-5">{error && 'Something Wrong!'}</p>
 					<p className="text-green-700 mt-5 ">
-						{updateSuccess && 'User is updated successfully'}
+						{updateSuccess && 'อัปเดตรายละเอียดงานเรียบร้อย'}
 					</p>
 				</div>
 			</div>

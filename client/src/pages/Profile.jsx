@@ -198,7 +198,7 @@ export default function Profile() {
 			</form>
 			{/* <p className="text-red-700 mt-5 ">{error && 'Something Wrong!'}</p> */}
 			<p className="text-green-700 mt-5 ">
-				{updateSuccess && 'User is updated successfully'}
+				{updateSuccess && 'อัปเดตข้อมูลผู้ใช้เรียบร้อย'}
 			</p>
 		</div>
 	)

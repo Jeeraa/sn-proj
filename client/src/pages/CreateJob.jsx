@@ -84,7 +84,7 @@ export default function CreateJob() {
 	}
 
 	const handleCancel = async () => {
-		navigate('/')
+		navigate('/all-jobs')
 	}
 
 	return (
