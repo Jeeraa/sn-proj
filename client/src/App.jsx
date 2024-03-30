@@ -1,6 +1,6 @@
 import './styles.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
+// import Home from './pages/Home'
 import SignUp from './pages/SignUp'
 import Profile from './pages/Profile'
 import Header from './components/Header'

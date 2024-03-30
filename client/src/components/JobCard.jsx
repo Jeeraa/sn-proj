@@ -1,5 +1,5 @@
 import {
-	ArchiveBoxArrowDownIcon,
+	// ArchiveBoxArrowDownIcon,
 	CurrencyDollarIcon,
 	DocumentArrowDownIcon,
 	DocumentCheckIcon,
@@ -32,6 +32,7 @@ export default function JobCard({
 	const [isModalOpen5, setIsModalOpen5] = useState(false)
 	const [isModalOpen6, setIsModalOpen6] = useState(false)
 	const { currentUser } = useSelector((state) => state.user)
+
 	// Fetch Process Data
 	useEffect(() => {
 		const fetchProcessData = async () => {
@@ -141,7 +142,11 @@ export default function JobCard({
 				<button
 					type="button"
 					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
-					onClick={() => setIsModalOpen3(true)}
+					onClick={() =>
+						formData.processes?.[1]?.allowedRoles.includes(currentUser.role)
+							? setIsModalOpen3(true)
+							: setIsModalOpen3(false)
+					}
 				>
 					<p className="font-semibold mb-3">
 						{formData.processes?.[1]?.process ?? ''}
@@ -166,7 +171,11 @@ export default function JobCard({
 				<button
 					type="button"
 					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
-					onClick={() => setIsModalOpen4(true)}
+					onClick={() =>
+						formData.processes?.[2]?.allowedRoles.includes(currentUser.role)
+							? setIsModalOpen4(true)
+							: setIsModalOpen4(false)
+					}
 				>
 					<p className="font-semibold mb-3">
 						{formData.processes?.[2]?.process ?? ''}
@@ -191,7 +200,11 @@ export default function JobCard({
 				<button
 					type="button"
 					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
-					onClick={() => setIsModalOpen5(true)}
+					onClick={() =>
+						formData.processes?.[3]?.allowedRoles.includes(currentUser.role)
+							? setIsModalOpen5(true)
+							: setIsModalOpen5(false)
+					}
 				>
 					<p className="font-semibold mb-3">
 						{formData.processes?.[3]?.process ?? ''}
@@ -216,7 +229,11 @@ export default function JobCard({
 				<button
 					type="button"
 					className="max-w-lg mx-auto flex flex-col items-center mb-1 mr-3 rounded-md bg-white px-2 py-2 text-sm text-sky-500 hover:bg-sky-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-300"
-					onClick={() => setIsModalOpen6(true)}
+					onClick={() =>
+						formData.processes?.[4]?.allowedRoles.includes(currentUser.role)
+							? setIsModalOpen6(true)
+							: setIsModalOpen6(false)
+					}
 				>
 					<p className="font-semibold mb-3">
 						{formData.processes?.[4]?.process ?? ''}

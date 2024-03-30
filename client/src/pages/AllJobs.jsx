@@ -37,9 +37,29 @@ export default function AllJobs() {
 		fetchProcesses()
 	})
 
+	const [showNotification, setShowNotification] = useState(false)
+
+	useEffect(() => {
+		const today = new Date()
+		const sevenDaysFromNow = new Date(today)
+		sevenDaysFromNow.setDate(today.getDate() + 7)
+
+		// Filter jobs that are due within 7 days
+		const filteredJobs = jobs.filter((job) => {
+			const dueDate = new Date(job.dueDate)
+			return dueDate < sevenDaysFromNow
+		})
+		// Show notification if there are jobs due within 7 days
+		if (filteredJobs.length > 0) {
+			setShowNotification(true)
+		} else {
+			setShowNotification(false)
+		}
+	}, [jobs])
+
 	return (
 		<div className="px-4 py-12 max-w-6xl mx-auto">
-			<Notification />
+			{showNotification && <Notification />}
 			<div className="m-5 lg:ml-4 lg:mt-0 text-end">
 				<span className="sm:ml-3">
 					<a href="/create-job">
