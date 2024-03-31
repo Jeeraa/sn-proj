@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
-export default function Notification({ isshow }) {
+export default function Notification({ isshow, message }) {
 	const [showNotification, setShowNotification] = useState(isshow)
+	// console.log(message)
 
 	useEffect(() => {
 		setShowNotification(isshow)
@@ -22,8 +23,12 @@ export default function Notification({ isshow }) {
 			className="fixed flex items-center w-full max-w-xs p-4 bg-white rtl:divide-x-reverse divide-gray-200 rounded-lg shadow top-5 right-5 dark:text-gray-400 dark:divide-red-700 space-x dark:bg-red-400"
 			role="alert"
 		>
-			<div className="ms-3 text-sm text-white">
-				<p> *** มีงานใกล้ถึงกำหนดส่งแล้ว! ***</p>
+			<div className="flex flex-col">
+				{message.map((message, index) => (
+					<li key={index} className="ms-3 text-sm text-white">
+						{message}
+					</li>
+				))}
 			</div>
 
 			<button
@@ -56,4 +61,5 @@ export default function Notification({ isshow }) {
 
 Notification.propTypes = {
 	isshow: PropTypes.bool,
+	message: PropTypes.arrayOf(PropTypes.string),
 }
