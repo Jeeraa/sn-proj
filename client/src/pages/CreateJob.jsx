@@ -34,27 +34,27 @@ export default function CreateJob() {
 			const processes = [
 				{
 					process: 'การประมูล',
-					allowedRoles: ['ผู้บริหาร', 'ฝ่ายขาย'],
+					allowedRoles: ['ฝ่ายขาย'],
 					status: 'รอดำเนินการ',
 				},
 				{
 					process: 'การเซ็นสัญญา',
-					allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายขาย'],
+					allowedRoles: ['ฝ่ายขาย'],
 					status: '',
 				},
 				{
 					process: 'การสั่งซื้อ',
-					allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายบัญชี'],
+					allowedRoles: ['ฝ่ายบัญชี'],
 					status: '',
 				},
 				{
 					process: 'การส่งมอบ',
-					allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายขาย'],
+					allowedRoles: ['ฝ่ายขาย'],
 					status: '',
 				},
 				{
 					process: 'การชำระเงิน',
-					allowedRoles: ['แอดมิน', 'ผู้บริหาร', 'ฝ่ายบัญชี'],
+					allowedRoles: ['ฝ่ายบัญชี'],
 					status: '',
 				},
 			]

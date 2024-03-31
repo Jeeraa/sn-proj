@@ -1,7 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 
-export default function Notification(isshow) {
+export default function Notification({ isshow }) {
 	const [showNotification, setShowNotification] = useState(isshow)
+
+	useEffect(() => {
+		setShowNotification(isshow)
+	}, [isshow])
 
 	const handleCloseNotification = () => {
 		setShowNotification(false)
@@ -47,4 +52,8 @@ export default function Notification(isshow) {
 			</button>
 		</div>
 	)
+}
+
+Notification.propTypes = {
+	isshow: PropTypes.bool,
 }

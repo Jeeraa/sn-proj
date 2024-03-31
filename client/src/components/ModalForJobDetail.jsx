@@ -104,11 +104,11 @@ export default function ModalForJobDetail({
 						</p>
 						<p className="m-1">
 							<span className="text-sm font-semibold">งบ :</span>{' '}
-							<span className="text-sm">{formatMoney(budget)}</span>
+							<span className="text-sm">{formatMoney(budget)} บาท</span>
 						</p>
 						<p className="m-1">
 							<span className="text-sm font-semibold">กำไร :</span>{' '}
-							<span className="text-sm">{formatMoney(profit)}</span>
+							<span className="text-sm">{formatMoney(profit)} บาท</span>
 						</p>
 						<p className="m-1">
 							<span className="text-sm font-semibold">วันส่งมอบ :</span>{' '}

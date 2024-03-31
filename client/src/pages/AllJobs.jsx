@@ -47,17 +47,12 @@ export default function AllJobs() {
 		const sevenDaysFromNow = new Date(today)
 		sevenDaysFromNow.setDate(today.getDate() + 7)
 
-		// Filter jobs that are due within 7 days
-		const filteredJobs = jobs.filter((job) => {
+		const hasJobsDueWithinSevenDays = jobs.some((job) => {
 			const dueDate = new Date(job.dueDate)
-			return dueDate < sevenDaysFromNow
+			return dueDate <= sevenDaysFromNow && dueDate >= today
 		})
-		// Show notification if there are jobs due within 7 days
-		if (filteredJobs.length > 0) {
-			setShowNotification(true)
-		} else {
-			setShowNotification(false)
-		}
+
+		setShowNotification(hasJobsDueWithinSevenDays)
 	}, [jobs])
 
 	useEffect(() => {
@@ -66,7 +61,7 @@ export default function AllJobs() {
 		// Filter jobs where the due date has passed
 		const filteredJobs = jobs.filter((job) => {
 			const dueDate = new Date(job.dueDate)
-			return dueDate >= today
+			return dueDate > today
 		})
 
 		setFilteredJob(filteredJobs)
@@ -74,7 +69,7 @@ export default function AllJobs() {
 
 	return (
 		<div className="px-4 py-12 max-w-6xl mx-auto">
-			{showNotification && <Notification/>}
+			<Notification isshow={showNotification} />
 			<div className="m-5 lg:ml-4 lg:mt-0 text-end">
 				{currentUser && currentUser.role === 'ผู้บริหาร' && (
 					<span className="sm:ml-3">
