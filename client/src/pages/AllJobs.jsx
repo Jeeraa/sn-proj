@@ -108,13 +108,13 @@ export default function AllJobs() {
 			setMessage(['มีงานใกล้ถึงกำหนดส่งแล้ว', 'ขั้นตอนการสั่งซื้อเสร็จสิ้นแล้ว'])
 		} else if (hasJobsDueWithinSevenDays && isCorrectRole) {
 			setShowNotification(true)
-			setMessage(['มีงานใกล้ถึงกำหนดส่งแล้ว', 'ขั้นตอนการประมูลเสร็จสิ้นแล้ว'])
+			setMessage(['มีงานใกล้ถึงกำหนดส่งแล้ว', 'ขั้นตอนการเซ็นสัญญาเสร็จสิ้นแล้ว'])
 		} else if (hasJobsDueWithinSevenDays) {
 			setShowNotification(true)
 			setMessage(['มีงานใกล้ถึงกำหนดส่งแล้ว'])
 		} else if (isCorrectRole) {
 			setShowNotification(true)
-			setMessage(['ขั้นตอนการประมูลเสร็จสิ้นแล้ว'])
+			setMessage(['ขั้นตอนการเซ็นสัญญาเสร็จสิ้นแล้ว'])
 		} else {
 			setShowNotification(false)
 			setMessage([])
