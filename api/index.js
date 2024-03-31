@@ -50,3 +50,10 @@ app.use((err, req, res, next) => {
 	const message = err.message || 'Internal Server Error'
 	return res.status(statusCode).json({ success: false, message, statusCode })
 })
+
+
+app.use(express.static(path.join(__dirname, '/client/dist')))
+
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'))
+})
